@@ -73,7 +73,7 @@ function App() {
 
           {/* Subscription Info */}
           <div className="flex flex-col items-center gap-2 mt-[25px]">
-            <span className="text-xl font-light text-white bounded-font">Подписка <span className="text-xl font-normal text-[#15ff00] bounded-font">активна</span></span>
+            <span className="text-xl font-light text-white bounded-font">Подписка <span className="text-xl font-light text-[#15ff00] bounded-font">активна</span></span>
             <div className="w-[100%] inline-flex items-center h-[47px] px-5 text-white font-light text-[13px] border border-white/20 rounded-3xl bg-[rgba(210,0,255,0.05)] bounded-font justify-between">
               <span>до 15.02.2026</span>
               <span>3 устройства</span>
@@ -101,12 +101,12 @@ function App() {
 
           {/* Footer Navigation */}
           <div className="flex justify-between items-center mt-[25px]">
-            <button className="font-medium text-xs leading-none text-center text-white bounded-font cursor-pointer inline-flex items-center h-[35px] bg-black/50 rounded-3xl px-[30px]">
+            <a href='https://t.me/psychowarevpn' target='_blank' className="font-medium text-xs leading-none text-center text-white bounded-font cursor-pointer inline-flex items-center h-[35px] bg-black/50 rounded-3xl px-[30px]">
               Новости
-            </button>
-            <button className="font-medium text-xs leading-none text-center text-white bounded-font cursor-pointer inline-flex items-center h-[35px] bg-black/50 rounded-3xl px-[30px]">
+            </a>
+            <a href='https://t.me/psychowaresupportxbot' target='_blank' className="font-medium text-xs leading-none text-center text-white bounded-font cursor-pointer inline-flex items-center h-[35px] bg-black/50 rounded-3xl px-[30px]">
               Поддержка
-            </button>
+            </a>
           </div>
 
         </div>
