@@ -32,3 +32,16 @@
 .logo {
     background-image: url(./assets/icon/logo.svg);
 }
+
+.tarif-1, .tarif-2 {
+    transition: 0.3s;
+}
+.tarif:hover .tarif-1,
+.tarif:hover .tarif-2 {
+    background: rgba(210, 0, 255, 0.1);
+    border-color: #d200ff;
+}
+.active {
+    background: rgba(210, 0, 255, 0.1);
+    border-color: #d200ff;
+}
