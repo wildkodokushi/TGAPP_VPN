@@ -26,7 +26,7 @@
 .main-background {
     background-image: url(./assets/image/background.svg);
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: cover;
 }
 
 .logo {
@@ -36,11 +36,13 @@
 .tarif-1, .tarif-2 {
     transition: 0.3s;
 }
+
 .tarif:hover .tarif-1,
 .tarif:hover .tarif-2 {
     background: rgba(210, 0, 255, 0.1);
     border-color: #d200ff;
 }
+
 .active {
     background: rgba(210, 0, 255, 0.1);
     border-color: #d200ff;
@@ -49,6 +51,7 @@
 .crown:nth-child(2) {
     position: relative;
 } 
+
 .crown:nth-child(2)::before {
     content: url(./assets/icon/tarifs/crown.svg);
     position: absolute;
@@ -61,3 +64,8 @@
     border-radius: 100%;
     left: -7px;
 }
+
+/* .footer {
+    position: sticky;
+    bottom: 0;
+} */
