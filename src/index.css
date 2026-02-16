@@ -24,9 +24,9 @@
 }
 
 .main-background {
-    background-color: #202020;
+    background-image: url(./assets/image/background.svg);
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
 .logo {
@@ -44,4 +44,20 @@
 .active {
     background: rgba(210, 0, 255, 0.1);
     border-color: #d200ff;
+}
+
+.crown:nth-child(2) {
+    position: relative;
+} 
+.crown:nth-child(2)::before {
+    content: url(./assets/icon/tarifs/crown.svg);
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #d200ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    left: -7px;
 }

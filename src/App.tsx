@@ -157,7 +157,7 @@ function TariffsPage() {
     { period: '6 месяцев', monthlyPrice: 69, total: 414 },
     { period: '12 месяцев', monthlyPrice: 59, total: 708 },
   ];
-  const [selectedTariff, setSelectedTariff] = useState(tariffs[0]);
+  const [selectedTariff, setSelectedTariff] = useState(tariffs[1]);
 
   // Простейший расчёт: итог = базовая цена * (0.9 + 0.1 * количество устройств), например
   // Здесь можно заменить на свою логику
@@ -196,7 +196,7 @@ function TariffsPage() {
               <div
                 key={tariff.period}
                 onClick={() => setSelectedTariff(tariff)}
-                className={`flex justify-between items-center cursor-pointer transition tarif`}>
+                className={`crown flex justify-between items-center cursor-pointer transition tarif`}>
                 <div className={`bounded-font font-light flex flex-col justify-center w-[77%] h-[60px] pl-[20px] border border-white/20 rounded-[30px] tarif-1
                   ${selectedTariff.period === tariff.period
                     ? 'active'
