@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 // тут страница выбора тарифа
 export default function TariffsPage() {
-  const navigate = useNavigate();
   const [selectedDevices, setSelectedDevices] = useState(3); // по умолчанию 3
 
   // Цены за месяц для разных периодов (пример)
@@ -36,7 +34,7 @@ export default function TariffsPage() {
   };
 
   return (
-    <div className="min-h-screen main-background flex items-center justify-center">
+    <div className="">
       <div className="my-[15px]">
         <h2 className="text-cm font-bold text-white acony-font text-center">
           PSYCHOWARE VPN
@@ -98,7 +96,7 @@ export default function TariffsPage() {
           </div>
 
           {/* Итого */}
-          <div className="mt-[25px] flex flex-col gap-2 ">
+          <div className="mt-[25px]">
             <div className='flex items-center gap-[10px]'>
               <div className='bounded-font text-white flex flex-col'>
                 <span className="text-sm">Итого:</span>
@@ -106,7 +104,6 @@ export default function TariffsPage() {
               </div>
               <button onClick={handlePayment} className='bg-[#d200ff] text-white text[16px] bounded-font w-[100%] flex justify-center items-center h-[47px] rounded-[30px] cursor-pointer'>Перейти к оплате</button>
             </div>
-            <button onClick={() => navigate(-1)} className='w-[100%] flex justify-center items-center h-[47px] rounded-[30px] text-white bounded-font bg-black/50 cursor-pointer'>Назад</button>
           </div>
 
         </div>

@@ -65,7 +65,8 @@
     left: -7px;
 }
 
-/* .footer {
+.footer {
     position: sticky;
     bottom: 0;
-} */
+    backdrop-filter: blur(5px);
+}
