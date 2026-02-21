@@ -3,49 +3,49 @@ import { useNavigate } from 'react-router-dom';
 
 // тут главная елик
 export default function MainPage() {
-  const [copiedId, setCopiedId] = useState(false);
-  const [copiedInvite, setCopiedInvite] = useState(false);
+    const [copiedId, setCopiedId] = useState(false);
+    const [copiedInvite, setCopiedInvite] = useState(false);
 
-  const idTextRef = useRef<HTMLSpanElement>(null);
-  const inviteTextRef = useRef<HTMLSpanElement>(null);
+    const idTextRef = useRef<HTMLSpanElement>(null);
+    const inviteTextRef = useRef<HTMLSpanElement>(null);
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  // Инициализация Telegram WebApp
-  useEffect(() => {
-    if (window.Telegram?.WebApp) {
-      window.Telegram.WebApp.ready();
-      window.Telegram.WebApp.expand();
-    }
-  }, []);
+    // Инициализация Telegram WebApp
+    useEffect(() => {
+        if (window.Telegram?.WebApp) {
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
+        }
+    }, []);
 
-  const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch (err) {
-      console.error('Failed to copy:', err);
-    }
-  };
+    const copyToClipboard = async (text: string) => {
+        try {
+        await navigator.clipboard.writeText(text);
+        } catch (err) {
+        console.error('Failed to copy:', err);
+        }
+    };
 
-  const handleCopyId = async () => {
-    if (idTextRef.current) {
-      await copyToClipboard(idTextRef.current.textContent || '');
-      setCopiedId(true);
-      setTimeout(() => setCopiedId(false), 1500);
-    }
-  };
+    const handleCopyId = async () => {
+        if (idTextRef.current) {
+        await copyToClipboard(idTextRef.current.textContent || '');
+        setCopiedId(true);
+        setTimeout(() => setCopiedId(false), 1500);
+        }
+    };
 
-  const handleCopyInvite = async () => {
-    if (inviteTextRef.current) {
-      await copyToClipboard(inviteTextRef.current.textContent || '');
-      setCopiedInvite(true);
-      setTimeout(() => setCopiedInvite(false), 1500);
-    }
-  };
+    const handleCopyInvite = async () => {
+        if (inviteTextRef.current) {
+        await copyToClipboard(inviteTextRef.current.textContent || '');
+        setCopiedInvite(true);
+        setTimeout(() => setCopiedInvite(false), 1500);
+        }
+    };
 
-  const handleBuyClick = () => {
-    navigate('/tariffs');
-  };
+    const handleBuyClick = () => {
+        navigate('/tariffs');
+    };
 
   return (
     <div className="">

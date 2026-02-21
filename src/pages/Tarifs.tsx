@@ -46,63 +46,55 @@ export default function TariffsPage() {
           {/* Тарифы */}
           <div className="space-y-2">
             {tariffs.map((tariff) => (
-              <div
-                key={tariff.period}
-                onClick={() => setSelectedTariff(tariff)}
-                className={`crown flex justify-between items-center cursor-pointer transition tarif`}>
-                <div className={`bounded-font font-light flex flex-col justify-center w-[77%] h-[60px] pl-[20px] border border-white/20 rounded-[30px] tarif-1
-                  ${selectedTariff.period === tariff.period
+                <div key={tariff.period} onClick={() => setSelectedTariff(tariff)} className={`px-[20px] border border-white/20 rounded-[30px] tarif-1 crown flex justify-between items-center h-[60px] cursor-pointer transition tarif 
+                ${selectedTariff.period === tariff.period
                     ? 'active'
                     : ''
-                  }`}>
-                  <span className="text-white text-[13px]">{tariff.period}</span>
-                  <span className='text-[10px] text-white/50'>{tariff.monthlyPrice}₽ в месяц</span>
+                }`}>
+                    <div className={`bounded-font font-light flex flex-col justify-center`}>
+                        <span className="text-white text-[13px]">{tariff.period}</span>
+                        <span className='text-[10px] text-white/50'>{tariff.monthlyPrice}₽ в месяц</span>
+                    </div>
+                    <span className={`text-[14px] bounded-font text-white font-light text-center`}>
+                        {tariff.total}
+                        <span className='text-[12px]'>₽</span>
+                    </span>
                 </div>
-                <div className="">
-                  <span
-                    className={`text-[14px] bounded-font rounded-full border border-white/20 w-[60px] h-[60px] flex flex-col items-center justify-center text-white font-light text-center tarif-2
-                      ${selectedTariff.period === tariff.period
-                        ? 'active'
-                        : ''
-                      }`}>
-                    {tariff.total}₽
-                  </span>
-                </div>
-              </div>
             ))}
           </div>
 
           {/* Количество устройств */}
           <div className="mt-[25px]">
             <div className='flex flex-col items-center text-center bounded-font font-light'>
-              <p className="text-white text-sm">Количество устройств</p>
-              <p className='text-white/50 text-[12px] mt-[5px]'>+50₽ / 1 шт.</p>
+                <p className="text-white text-sm">Количество устройств</p>
+                <p className='text-white/50 text-[12px] mt-[5px]'>+50₽ / 1 шт.</p>
             </div>
-            <div className="flex justify-between mt-[15px] bounded-font">
-              {[3, 4, 5, 6, 7].map((num) => (
-                <button
-                  key={num}
-                  onClick={() => setSelectedDevices(num)}
-                  className={`w-[60px] h-[60px] rounded-full border-1 border-white/20 transition cursor-pointer text-white font-light text-[20px] ${
-                    selectedDevices === num
-                      ? 'bg-[#d200ff]'
-                      : 'hover:border-[#d200ff]'
-                  }`}
-                >
-                  {num}
-                </button>
-              ))}
+            <div className="mt-[15px] bounded-font flex flex-col items-center">
+                <input type="range" min="3" max="7" step="1" value={selectedDevices} onChange={(e) => setSelectedDevices(Number(e.target.value))} className="w-full max-w-[300px] accent-[#d200ff]" />
+
+                <div className="flex justify-between px-[5px] w-full max-w-[300px] mt-2 text-white/70 text-sm">
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                    <span>6</span>
+                    <span>7</span>
+                </div>
+
+                <div className="text-white text-lg mt-2">
+                    Выбрано: 
+                    <span className="text-[#d200ff] font-bold"> {selectedDevices}</span>
+                </div>
             </div>
           </div>
 
           {/* Итого */}
           <div className="mt-[25px]">
             <div className='flex items-center gap-[10px]'>
-              <div className='bounded-font text-white flex flex-col'>
-                <span className="text-sm">Итого:</span>
-                <span className="font-bold text-[20px]">{totalPrice}₽</span>
-              </div>
-              <button onClick={handlePayment} className='bg-[#d200ff] text-white text[16px] bounded-font w-[100%] flex justify-center items-center h-[47px] rounded-[30px] cursor-pointer'>Перейти к оплате</button>
+                <div className='bounded-font text-white flex flex-col'>
+                    <span className="text-sm">Итого:</span>
+                    <span className="font-bold text-[20px]">{totalPrice}₽</span>
+                </div>
+                <button onClick={handlePayment} className='bg-[#d200ff] text-white text[16px] bounded-font w-[100%] flex justify-center items-center h-[47px] rounded-[30px] cursor-pointer'>Перейти к оплате</button>
             </div>
           </div>
 
