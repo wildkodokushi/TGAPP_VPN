@@ -13,7 +13,6 @@ export default function TariffsPage() {
   ];
   const [selectedTariff, setSelectedTariff] = useState(tariffs[1]);
 
-  // Простейший расчёт: итог = базовая цена * (0.9 + 0.1 * количество устройств), например
   // Здесь можно заменить на свою логику
   const calculateTotal = () => {
     const base = selectedTariff.total;
@@ -41,7 +40,7 @@ export default function TariffsPage() {
         </h2>
 
         {/* card */}
-        <div className='w-[354px] mt-[20px] border-2 border-white/10 rounded-[16px] bg-[rgba(210,0,255,0.05)] p-[20px_15px]'>
+        <div className='w-[354px] mt-[20px] border-2 border-white/10 rounded-[16px] bg-[rgba(255,255,255,0.04)] p-[20px_15px]'>
 
           {/* Тарифы */}
           <div className="space-y-2">
@@ -70,7 +69,7 @@ export default function TariffsPage() {
                 <p className='text-white/50 text-[12px] mt-[5px]'>+50₽ / 1 шт.</p>
             </div>
             <div className="mt-[15px] bounded-font flex flex-col items-center">
-                <input type="range" min="3" max="7" step="1" value={selectedDevices} onChange={(e) => setSelectedDevices(Number(e.target.value))} className="w-full max-w-[300px] accent-[#d200ff]" />
+                <input type="range" min="3" max="7" step="1" value={selectedDevices} onChange={(e) => setSelectedDevices(Number(e.target.value))} className="w-full max-w-[300px] accent-white" />
 
                 <div className="flex justify-between px-[5px] w-full max-w-[300px] mt-2 text-white/70 text-sm">
                     <span>3</span>
@@ -82,7 +81,7 @@ export default function TariffsPage() {
 
                 <div className="text-white text-lg mt-2">
                     Выбрано: 
-                    <span className="text-[#d200ff] font-bold"> {selectedDevices}</span>
+                    <span className="text-white font-bold"> {selectedDevices}</span>
                 </div>
             </div>
           </div>
@@ -94,7 +93,7 @@ export default function TariffsPage() {
                     <span className="text-sm">Итого:</span>
                     <span className="font-bold text-[20px]">{totalPrice}₽</span>
                 </div>
-                <button onClick={handlePayment} className='bg-[#d200ff] text-white text[16px] bounded-font w-[100%] flex justify-center items-center h-[47px] rounded-[30px] cursor-pointer'>Перейти к оплате</button>
+                <button onClick={handlePayment} className='bg-white text-black text[16px] bounded-font w-[100%] flex justify-center items-center h-[47px] rounded-[30px] cursor-pointer hover:bg-white/90'>Перейти к оплате</button>
             </div>
           </div>
 
@@ -103,3 +102,4 @@ export default function TariffsPage() {
     </div>
   );
 }
+
