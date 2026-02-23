@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+vpn_b0t
+vpn_api
 
 # Editor directories and files
 .vscode/*

@@ -83,7 +83,13 @@
   background-size: cover;
   color: #fff;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.layout-root {
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .main-background::before {
@@ -180,6 +186,13 @@
   position: sticky;
   bottom: 0;
   backdrop-filter: blur(5px);
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+}
+
+@media (max-height: 620px) {
+  .layout-content {
+    align-items: flex-start;
+  }
 }
 
 input[type=range] {

@@ -51,7 +51,7 @@ export default function Layout() {
     }, [location.pathname]);
 
   return (
-    <div className={`min-h-screen main-background theme-${theme} flex flex-col justify-center items-center`}>
+    <div className={`layout-root main-background theme-${theme} flex flex-col items-center`}>
 
         <div className='w-full max-w-[380px] flex justify-end px-[12px] pt-[10px]'>
             <div className='relative theme-soft border border-white/20 rounded-full p-[3px] inline-grid grid-cols-2 w-[148px]'>
@@ -79,7 +79,7 @@ export default function Layout() {
         </div>
 
         {/* подгрузка основного контента */}
-        <div className="">
+        <div className="layout-content flex-1 w-full flex items-center justify-center">
             <Outlet />
         </div>
 

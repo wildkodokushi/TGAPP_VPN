@@ -1,10 +1,55 @@
 ﻿import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getCachedUserStatus, readCachedUserStatus, type UserStatus } from '../lib/api';
+import { getTelegramProfile } from '../lib/telegram';
+
+const PENDING_PAYMENT_KEY = 'pending-platega-payment';
+const PAYMENT_POLL_TIMEOUT_MS = 60_000;
+const PAYMENT_POLL_INTERVAL_MS = 5_000;
+const USER_STATUS_CACHE_AGE_MS = 60_000;
+
+type SubscriptionView = {
+  label: string;
+  until: string;
+  devices: string;
+  isActive: boolean;
+};
+
+function buildSubscriptionView(user: UserStatus | null): SubscriptionView {
+  if (user?.subscription) {
+    const expiresDate = new Date(user.subscription.expires_at);
+    return {
+      label: 'активна',
+      until: `до ${expiresDate.toLocaleDateString('ru-RU')}`,
+      devices: `${user.subscription.max_devices} устройств`,
+      isActive: true,
+    };
+  }
+
+  return {
+    label: 'не активна',
+    until: 'нет подписки',
+    devices: '0 устройств',
+    isActive: false,
+  };
+}
 
 export default function MainPage() {
-  const [copiedId, setCopiedId] = useState(false);
-  const idTextRef = useRef<HTMLSpanElement>(null);
   const navigate = useNavigate();
+  const profile = getTelegramProfile();
+  const tgChatId = profile.userId ?? profile.chatId;
+  const cachedUser = tgChatId !== null ? readCachedUserStatus(tgChatId, USER_STATUS_CACHE_AGE_MS) : null;
+  const initialSubscription = buildSubscriptionView(cachedUser);
+
+  const [copiedId, setCopiedId] = useState(false);
+  const [chatId, setChatId] = useState<string>(tgChatId !== null ? String(tgChatId) : '-');
+  const [subscriptionLabel, setSubscriptionLabel] = useState<string>(initialSubscription.label);
+  const [statusError, setStatusError] = useState<string | null>(null);
+  const [subscriptionMeta, setSubscriptionMeta] = useState<{ until: string; devices: string }>({
+    until: initialSubscription.until,
+    devices: initialSubscription.devices,
+  });
+  const idTextRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (window.Telegram?.WebApp) {
@@ -13,9 +58,113 @@ export default function MainPage() {
     }
   }, []);
 
+  useEffect(() => {
+    if (tgChatId === null) {
+      return;
+    }
+
+    setChatId(String(tgChatId));
+    let paymentPollTimer: number | null = null;
+
+    const applyUserStatus = async (forceRefresh = false) => {
+      try {
+        const user = await getCachedUserStatus(tgChatId, profile.username, {
+          maxAgeMs: USER_STATUS_CACHE_AGE_MS,
+          forceRefresh,
+          allowStaleOnError: true,
+        });
+        const next = buildSubscriptionView(user);
+        setSubscriptionLabel(next.label);
+        setSubscriptionMeta({
+          until: next.until,
+          devices: next.devices,
+        });
+        setStatusError(null);
+        return next.isActive;
+      } catch (err) {
+        console.error('Failed to load user status:', err);
+        const message = err instanceof Error ? err.message : 'unknown error';
+        setStatusError(message);
+        return false;
+      }
+    };
+
+    const pollPaymentStatusIfNeeded = () => {
+      const raw = localStorage.getItem(PENDING_PAYMENT_KEY);
+      if (!raw) {
+        return;
+      }
+
+      try {
+        const pending = JSON.parse(raw) as { tgChatId?: number; createdAt?: number };
+        if (pending.tgChatId !== tgChatId) {
+          localStorage.removeItem(PENDING_PAYMENT_KEY);
+          return;
+        }
+
+        const createdAt = pending.createdAt ?? 0;
+        if (Date.now() - createdAt > PAYMENT_POLL_TIMEOUT_MS) {
+          localStorage.removeItem(PENDING_PAYMENT_KEY);
+          return;
+        }
+      } catch {
+        localStorage.removeItem(PENDING_PAYMENT_KEY);
+        return;
+      }
+
+      let elapsed = 0;
+      paymentPollTimer = window.setInterval(() => {
+        elapsed += PAYMENT_POLL_INTERVAL_MS;
+        if (elapsed > PAYMENT_POLL_TIMEOUT_MS) {
+          if (paymentPollTimer) {
+            window.clearInterval(paymentPollTimer);
+            paymentPollTimer = null;
+          }
+          localStorage.removeItem(PENDING_PAYMENT_KEY);
+          return;
+        }
+
+        void (async () => {
+          const isActive = await applyUserStatus(true);
+          if (isActive) {
+            if (paymentPollTimer) {
+              window.clearInterval(paymentPollTimer);
+              paymentPollTimer = null;
+            }
+            localStorage.removeItem(PENDING_PAYMENT_KEY);
+          }
+        })();
+      }, PAYMENT_POLL_INTERVAL_MS);
+    };
+
+    void (async () => {
+      await applyUserStatus(false);
+      pollPaymentStatusIfNeeded();
+    })();
+
+    return () => {
+      if (paymentPollTimer) {
+        window.clearInterval(paymentPollTimer);
+      }
+    };
+  }, [profile.username, tgChatId]);
+
   const copyToClipboard = async (text: string) => {
     try {
-      await navigator.clipboard.writeText(text);
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+
+      const input = document.createElement('textarea');
+      input.value = text;
+      input.style.position = 'fixed';
+      input.style.left = '-9999px';
+      document.body.appendChild(input);
+      input.focus();
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
     } catch (err) {
       console.error('Failed to copy:', err);
     }
@@ -29,8 +178,16 @@ export default function MainPage() {
     }
   };
 
-  const handleBuyClick = () => {
-    navigate('/tariffs');
+  const handleConnectClick = () => {
+    navigate('/connect');
+  };
+
+  const t = {
+    connect: 'Подключиться',
+    sub: 'Подписка',
+    active: subscriptionLabel,
+    news: 'Новости',
+    support: 'Поддержка',
   };
 
   return (
@@ -48,7 +205,7 @@ export default function MainPage() {
             <div className='flex items-center gap-2 text-gray-700'>
               <div className='font-light text-base text-center text-white/70 bounded-font'>
                 <span>id: </span>
-                <span ref={idTextRef}>26263</span>
+                <span ref={idTextRef}>{chatId}</span>
               </div>
               <span
                 className='cursor-pointer transition-opacity hover:opacity-80'
@@ -66,27 +223,30 @@ export default function MainPage() {
                 )}
               </span>
             </div>
-            <button onClick={handleBuyClick} className='theme-primary-btn cursor-pointer w-[100%] inline-flex items-center h-[47px] px-5 font-bold bounded-font text-base leading-none rounded-3xl justify-center text-center transition-colors'>
-              Купить
+            <button onClick={handleConnectClick} className='theme-primary-btn cursor-pointer w-[100%] inline-flex items-center h-[47px] px-5 font-bold bounded-font text-base leading-none rounded-3xl justify-center text-center transition-colors'>
+              {t.connect}
             </button>
+            {statusError ? (
+              <span className='text-[11px] text-red-300 bounded-font'>Ошибка API: {statusError}</span>
+            ) : null}
           </div>
 
           <div className='flex flex-col items-center gap-2 mt-[25px]'>
             <span className='text-xl font-light text-white bounded-font'>
-              Подписка <span className='text-xl font-light text-white bounded-font'>активна</span>
+              {t.sub} <span className='text-xl font-light text-white bounded-font'>{t.active}</span>
             </span>
             <div className='theme-soft w-[100%] inline-flex items-center h-[47px] px-5 text-white font-light text-[13px] border border-white/20 rounded-3xl bounded-font justify-between'>
-              <span>до 15.02.2026</span>
-              <span>3 устройства</span>
+              <span>{subscriptionMeta.until}</span>
+              <span>{subscriptionMeta.devices}</span>
             </div>
           </div>
 
           <div className='flex justify-between items-center mt-[25px]'>
             <a href='https://t.me/psychowarevpn' target='_blank' rel='noopener noreferrer' className='theme-chip font-medium text-xs leading-none text-center text-white bounded-font cursor-pointer inline-flex items-center h-[35px] rounded-3xl px-[30px]'>
-              Новости
+              {t.news}
             </a>
             <a href='https://t.me/psychowaresupportxbot' target='_blank' rel='noopener noreferrer' className='theme-chip font-medium text-xs leading-none text-center text-white bounded-font cursor-pointer inline-flex items-center h-[35px] rounded-3xl px-[30px]'>
-              Поддержка
+              {t.support}
             </a>
           </div>
         </div>

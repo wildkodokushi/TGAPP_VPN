@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import MainPage from './pages/Main';
 import TariffsPage from './pages/Tarifs';
 import CabinetPage from './pages/Cabinet';
+import ConnectPage from './pages/Connect';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<MainPage />} />
+          <Route path="/connect" element={<ConnectPage />} />
           <Route path="/tariffs" element={<TariffsPage />} />
           <Route path="/cabinet" element={<CabinetPage />} />
         </Route>

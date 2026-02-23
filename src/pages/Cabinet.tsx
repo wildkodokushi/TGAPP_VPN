@@ -1,28 +1,120 @@
 ﻿import { useEffect, useRef, useState } from 'react';
+import { getCachedUserStatus, readCachedUserStatus, type PlanCode, type UserStatus } from '../lib/api';
+import { getTelegramProfile } from '../lib/telegram';
+
+type PurchaseItem = UserStatus['purchases'][number];
+
+const PLAN_LABELS: Record<PlanCode, string> = {
+  '1m': '1 месяц',
+  '3m': '3 месяца',
+  '6m': '6 месяцев',
+  '1y': '12 месяцев',
+};
+
+const BOT_USERNAME = 'psychowarevpnxbot';
+const USER_STATUS_CACHE_AGE_MS = 60_000;
+
+function formatDate(value: string): string {
+  return new Date(value).toLocaleDateString('ru-RU');
+}
+
+function copyTextFallback(text: string): boolean {
+  const input = document.createElement('textarea');
+  input.value = text;
+  input.setAttribute('readonly', '');
+  input.style.position = 'fixed';
+  input.style.opacity = '0';
+  input.style.pointerEvents = 'none';
+  input.style.left = '-9999px';
+  document.body.appendChild(input);
+  input.focus();
+  input.select();
+  input.setSelectionRange(0, input.value.length);
+  const copied = document.execCommand('copy');
+  document.body.removeChild(input);
+  return copied;
+}
 
 export default function CabinetPage() {
-  const referralsCount = 12;
-  const referralDays = 34;
-  const referralLink = 'https://t.me/psychowarevpnxbot?start=ref_660741573';
+  const profile = getTelegramProfile();
+  const identityId = profile.userId ?? profile.chatId;
+  const cachedUser = identityId !== null ? readCachedUserStatus(identityId, USER_STATUS_CACHE_AGE_MS) : null;
+
+  const initialProfileName = profile.fullName || profile.username || 'Пользователь';
+  const initialProfileId = identityId !== null ? String(identityId) : '-';
+  const initialReferralLink = identityId !== null
+    ? `https://t.me/${BOT_USERNAME}?start=ref_${identityId}`
+    : `https://t.me/${BOT_USERNAME}`;
+
+  const [referralsCount, setReferralsCount] = useState(Number(cachedUser?.referrals_count) || 0);
+  const [referralDays, setReferralDays] = useState(Number(cachedUser?.bonus_days) || 0);
+  const [profileName] = useState<string>(initialProfileName);
+  const [profileId] = useState<string>(initialProfileId);
+  const [profilePhotoUrl] = useState<string | null>(profile.photoUrl || null);
+  const [referralLink] = useState<string>(initialReferralLink);
+  const [purchases, setPurchases] = useState<PurchaseItem[]>(cachedUser?.purchases || []);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [copiedReferral, setCopiedReferral] = useState(false);
   const copiedTimerRef = useRef<number | null>(null);
-  const maxReferralLinkChars = 32;
-  const shortReferralLink =
-    referralLink.length > maxReferralLinkChars
-      ? `${referralLink.slice(0, maxReferralLinkChars)}...`
-      : referralLink;
+  const [copyError, setCopyError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (identityId === null) {
+      return () => {
+        if (copiedTimerRef.current) {
+          window.clearTimeout(copiedTimerRef.current);
+        }
+      };
+    }
+
+    const loadUser = async () => {
+      try {
+        const user = await getCachedUserStatus(identityId, profile.username, {
+          maxAgeMs: USER_STATUS_CACHE_AGE_MS,
+          allowStaleOnError: true,
+        });
+        setReferralsCount(Number(user.referrals_count) || 0);
+        setReferralDays(Number(user.bonus_days) || 0);
+        setPurchases(user.purchases || []);
+        setLoadError(null);
+      } catch (err) {
+        console.error('Failed to load cabinet data:', err);
+        const message = err instanceof Error ? err.message : 'unknown error';
+        setLoadError(message);
+      }
+    };
+
+    void loadUser();
+
     return () => {
       if (copiedTimerRef.current) {
         window.clearTimeout(copiedTimerRef.current);
       }
     };
-  }, []);
+  }, [identityId, profile.username]);
 
   const handleCopyReferralLink = async () => {
+    setCopyError(null);
     try {
-      await navigator.clipboard.writeText(referralLink);
+      let copied = false;
+
+      if (navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(referralLink);
+          copied = true;
+        } catch (clipboardErr) {
+          console.warn('Clipboard API rejected, using fallback copy:', clipboardErr);
+        }
+      }
+
+      if (!copied) {
+        copied = copyTextFallback(referralLink);
+      }
+
+      if (!copied) {
+        throw new Error('Clipboard copy command failed');
+      }
+
       setCopiedReferral(true);
       if (copiedTimerRef.current) {
         window.clearTimeout(copiedTimerRef.current);
@@ -32,8 +124,11 @@ export default function CabinetPage() {
       }, 3000);
     } catch (err) {
       console.error('Failed to copy referral link:', err);
+      setCopyError('Не удалось скопировать. Удерживайте ссылку и скопируйте вручную.');
     }
   };
+
+  const avatarLetter = profileName.trim().charAt(0).toUpperCase() || 'U';
 
   return (
     <div className='my-[15px]'>
@@ -43,17 +138,32 @@ export default function CabinetPage() {
         </h2>
 
         <div className='mt-[20px] w-full flex items-center gap-[20px] h-[85px] border border-white/20 rounded-2xl theme-card theme-soft'>
-          <div className='border-2 rounded-full w-[50px] h-[50px] theme-avatar-border ml-[20px]'></div>
+          <div className='border-2 rounded-full w-[50px] h-[50px] theme-avatar-border ml-[20px] overflow-hidden flex items-center justify-center theme-soft'>
+            {profilePhotoUrl ? (
+              <img
+                src={profilePhotoUrl}
+                alt='Telegram avatar'
+                className='w-full h-full object-cover'
+                loading='eager'
+                referrerPolicy='no-referrer'
+              />
+            ) : (
+              <span className='text-white/80 text-[18px] font-bold bounded-font'>{avatarLetter}</span>
+            )}
+          </div>
           <div className='flex flex-col gap-[5px] bounded-font'>
-            <span className='text-white text-[14px] font-bold'>sweater</span>
+            <span className='text-white text-[14px] font-bold'>{profileName}</span>
             <div className='text-white/30 text-[12px]'>
               <span>ID: </span>
-              <span>660741573</span>
+              <span>{profileId}</span>
             </div>
           </div>
         </div>
 
         <h2 className='font-light text-[18px] text-left my-[10px] text-white bounded-font'>Реферальная статистика</h2>
+        {loadError ? (
+          <div className='mb-[8px] text-[11px] text-red-300 bounded-font'>Ошибка API: {loadError}</div>
+        ) : null}
 
         <div className='grid grid-cols-2 gap-[10px]'>
           <div className='w-full border border-white/20 rounded-2xl theme-card p-[14px] bounded-font'>
@@ -69,7 +179,12 @@ export default function CabinetPage() {
         <div className='mt-[10px] w-full border border-white/20 rounded-2xl theme-card p-[14px] bounded-font'>
           <div className='text-white/60 text-[11px]'>Реферальная ссылка</div>
           <div className='mt-[8px] flex items-center justify-between gap-[10px]'>
-            <span className='text-white/80 text-[12px] leading-tight'>{shortReferralLink}</span>
+            <span
+              className='block max-w-[250px] text-white/80 text-[12px] leading-tight overflow-hidden text-ellipsis whitespace-nowrap'
+              title={referralLink}
+            >
+              {referralLink}
+            </span>
             <button
               onClick={handleCopyReferralLink}
               className='shrink-0 h-[34px] w-[34px] rounded-full border border-white/20 theme-soft flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors'
@@ -86,24 +201,43 @@ export default function CabinetPage() {
               )}
             </button>
           </div>
+          {copiedReferral ? (
+            <div className='mt-[6px] text-[11px] text-white/60'>Ссылка скопирована</div>
+          ) : null}
+          {copyError ? (
+            <div className='mt-[6px] text-[11px] text-red-300'>{copyError}</div>
+          ) : null}
         </div>
 
         <h2 className='font-light text-[18px] text-left my-[10px] text-white bounded-font'>Ваши покупки</h2>
 
         <div className='grid grid-cols-1 gap-[15px]'>
-          <div className='w-full border border-white/20 rounded-2xl theme-card p-[20px] flex flex-col gap-[10px]'>
-            <div className='flex justify-between items-center bounded-font text-white text-[14px]'>
-              <span className='uppercase font-bold'>Подписка 7 дней</span>
-              <span className='flex items-center'>100<span>₽</span></span>
-            </div>
-            <div className='bounded-font text-white/40 text-[12px]'>
-              <span className='flex items-center gap-[3px]'>21.01.2026 <span className='text-[16px]'>•</span> <span>7 дн.</span></span>
-              <div className='bounded-font font-light text-white/40 text-[11px]'>
-                <span>Заказ:</span>
-                <span>3123432143</span>
+          {purchases.length > 0 ? (
+            purchases.map((purchase) => (
+              <div key={purchase.id} className='w-full border border-white/20 rounded-2xl theme-card p-[20px] flex flex-col gap-[10px]'>
+                <div className='flex justify-between items-center bounded-font text-white text-[14px]'>
+                  <span className='uppercase font-bold'>{PLAN_LABELS[purchase.plan] || purchase.plan}</span>
+                  <span className='flex items-center'>
+                    {Math.round(purchase.price_paid)}
+                    <span>₽</span>
+                  </span>
+                </div>
+                <div className='bounded-font text-white/40 text-[12px]'>
+                  <span className='flex items-center gap-[3px]'>
+                    {formatDate(purchase.created_at)} <span className='text-[16px]'>•</span> <span>{purchase.max_devices} устр.</span>
+                  </span>
+                  <div className='bounded-font font-light text-white/40 text-[11px]'>
+                    <span>Заказ:</span>
+                    <span>{purchase.payment_id || `sub_${purchase.id}`}</span>
+                  </div>
+                </div>
               </div>
+            ))
+          ) : (
+            <div className='w-full border border-white/20 rounded-2xl theme-card p-[20px] bounded-font text-white/60 text-[13px]'>
+              Пока нет оплаченных покупок
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

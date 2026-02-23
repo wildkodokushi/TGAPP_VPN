@@ -5,6 +5,14 @@ declare global {
             ready(): void;
             expand(): void;
             openLink(url: string): void;
+            openInvoice?(url: string, callback?: (status: 'paid' | 'cancelled' | 'failed' | 'pending') => void): void;
+            BackButton?: {
+                show(): void;
+                hide(): void;
+                onClick?(callback: () => void): void;
+                offClick?(callback: () => void): void;
+            };
+            initData?: string;
             colorScheme?: 'light' | 'dark';
             themeParams?: {
                 bg_color?: string;
@@ -21,8 +29,15 @@ declare global {
                     first_name: string;
                     last_name?: string;
                     username?: string;
+                    photo_url?: string;
                     language_code?: string;
                     is_premium?: boolean;
+                };
+                chat?: {
+                    id: number;
+                    type?: string;
+                    title?: string;
+                    username?: string;
                 };
             };
         };
