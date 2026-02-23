@@ -411,7 +411,7 @@ export default function TariffsPage() {
               </div>
 
               <div className='mt-[25px]'>
-                <div className='flex items-center gap-[10px]'>
+                <div className='flex items-center justify-between'>
                   <div className='bounded-font text-white flex flex-col'>
                     <span className='text-sm'>Итого:</span>
                     <span className='font-bold text-[20px]'>{totalPrice}₽</span>
@@ -419,7 +419,7 @@ export default function TariffsPage() {
                   <button
                     type='button'
                     onClick={() => setIsPaymentStep(true)}
-                    className='theme-primary-btn text[16px] bounded-font w-[100%] flex justify-center items-center h-[47px] rounded-[30px] cursor-pointer'
+                    className='theme-primary-btn max-w-[253px] w-full text[16px] bounded-font flex justify-center items-center h-[47px] rounded-[30px] cursor-pointer'
                   >
                     К способу оплаты
                   </button>
