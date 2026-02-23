@@ -1,15 +1,41 @@
 import { useEffect, useRef, useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+
+type AppTheme = 'space' | 'pink';
 
 export default function Layout() {
     const navigate = useNavigate();
     const location = useLocation();
+
+    const handlers = useSwipeable({
+        onSwipedLeft: () => {
+            if (location.pathname === '/cabinet') navigate('/');
+            else if (location.pathname === '/') navigate('/tariffs');
+        },
+        onSwipedRight: () => {
+            if (location.pathname === '/tariffs') navigate('/');
+            else if (location.pathname === '/') navigate('/cabinet');
+        },
+        trackMouse: true,
+        preventScrollOnSwipe: true,
+        delta: 10,
+    });
+
 
     const cabinetRef = useRef(null);
     const homeRef = useRef(null);
     const tariffsRef = useRef(null);
 
     const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+    const [theme, setTheme] = useState<AppTheme>(() => {
+        const savedTheme = localStorage.getItem('app-theme');
+        return savedTheme === 'pink' ? 'pink' : 'space';
+    });
+
+    useEffect(() => {
+        localStorage.setItem('app-theme', theme);
+    }, [theme]);
 
     useEffect(() => {
         let activeRef = null;
@@ -18,11 +44,11 @@ export default function Layout() {
         else if (location.pathname === '/tariffs') activeRef = tariffsRef;
 
         if (activeRef?.current) {
-        const { offsetLeft, offsetWidth } = activeRef.current;
-        setIndicatorStyle({ left: offsetLeft, width: offsetWidth });
+            const { offsetLeft, offsetWidth } = activeRef.current;
+            setIndicatorStyle({ left: offsetLeft, width: offsetWidth });
         }
     }, [location.pathname]);
-
+                                 
     useEffect(() => {
         const handleResize = () => {
 
@@ -41,22 +67,50 @@ export default function Layout() {
     }, [location.pathname]);
 
   return (
-    <div className="min-h-screen main-background flex flex-col justify-center items-center">
+    <div {...handlers} className={`layout-root main-background theme-${theme} flex flex-col items-center`}>
+
+        <div className='w-full max-w-[380px] flex justify-end px-[12px] pt-[10px]'>
+            <div className='relative theme-soft border border-white/20 rounded-full p-[3px] inline-grid grid-cols-2 w-[148px]'>
+                <div
+                  className='theme-primary-btn absolute top-[3px] bottom-[3px] left-[3px] w-[calc(50%_-_5px)] rounded-full transition-transform duration-300 pointer-events-none'
+                  style={{ transform: theme === 'space' ? 'translateX(0)' : 'translateX(calc(100% + 4px))' }}
+                />
+                <button
+                  type='button'
+                  onClick={() => setTheme('space')}
+                  className='relative z-10 h-[28px] px-[12px] rounded-full text-[11px] bounded-font cursor-pointer transition-colors'
+                  style={{ color: theme === 'space' ? 'var(--primary-text)' : 'rgba(255,255,255,0.7)' }}
+                >
+                  Space
+                </button>
+                <button
+                  type='button'
+                  onClick={() => setTheme('pink')}
+                  className='relative z-10 h-[28px] px-[12px] rounded-full text-[11px] bounded-font cursor-pointer transition-colors'
+                  style={{ color: theme === 'pink' ? 'var(--primary-text)' : 'rgba(255,255,255,0.7)' }}
+                >
+                  Pink
+                </button>
+            </div>
+        </div>
 
         {/* подгрузка основного контента */}
-        <div className="">
+        <div className="layout-content flex-1 w-full flex items-center justify-center">
             <Outlet />
         </div>
 
         {/* футер */}
-        <div className='footer w-[100%] mt-[auto] flex items-center justify-between p-[10px]'>
+        <div className='footer w-[100%] mt-[auto] flex items-center justify-between '>
 
-            <div className="absolute bottom-[15px] left-0 h-[calc(100%-30px)] bg-black/30 border border-white/20 rounded-3xl transition-all duration-300 pointer-events-none" style={{ left: indicatorStyle.left, width: indicatorStyle.width }}/>
+            <div
+              className="footer-indicator absolute bottom-[14px] left-0 h-[calc(100%-28px)] border rounded-full transition-all duration-300 pointer-events-none"
+              style={{ left: indicatorStyle.left + 12, width: Math.max(0, indicatorStyle.width - 24) }}
+            />
 
-            <button ref={cabinetRef} onClick={() => navigate('/cabinet')} className='cursor-pointer px-[20px] py-[10px] relative z-10'>
+            <button ref={cabinetRef} onClick={() => navigate('/cabinet')} className='cursor-pointer w-1/3 flex justify-center relative z-10'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 1024 1024"><title>User-outlined SVG Icon</title><path fill="#fff" d="M858.5 763.6a374 374 0 0 0-80.6-119.5a375.63 375.63 0 0 0-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1c-.4.2-.8.3-1.2.5c-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 0 0-80.6 119.5A371.7 371.7 0 0 0 136 901.8a8 8 0 0 0 8 8.2h60c4.4 0 7.9-3.5 8-7.8c2-77.2 33-149.5 87.8-204.3c56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 0 0 8-8.2c-1-47.8-10.9-94.3-29.5-138.2M512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534"/></svg>
             </button>
-            <button ref={homeRef} onClick={() => navigate('/')} className='cursor-pointer px-[20px] py-[10px] relative z-10'>
+            <button ref={homeRef} onClick={() => navigate('/')} className='cursor-pointer w-1/3 flex justify-center relative z-10'>
                 <svg width="50" height="50" viewBox="0 0 376 294" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M155.407 2.39681C154.758 4.59389 154.459 4.84356 152.411 5.54263L150.115 6.34157L152.062 7.1405C153.56 7.78964 154.209 8.53864 155.108 10.4361L156.256 12.9328L157.405 10.4361C158.304 8.48871 158.953 7.73971 160.551 7.04064L162.548 6.19176L160.8 5.84223C158.803 5.44276 158.004 4.69376 156.905 1.94741L156.156 0L155.407 2.39681Z" fill="white"/>
                     <path d="M192.908 9.63719C184.768 16.1286 175.78 25.2165 170.188 32.6566L168.79 34.554L171.736 33.2058C176.18 31.2085 182.821 29.1612 187.715 28.2624C190.161 27.813 192.508 27.2637 192.908 27.064C193.906 26.5147 196.603 20.1732 197.851 15.3296C199.049 10.7857 199.749 5.0433 199.099 5.0433C198.85 5.0433 196.053 7.14051 192.908 9.63719Z" fill="white"/>
@@ -68,7 +122,7 @@ export default function Layout() {
                     <path d="M218.022 223.2H165.702V229.6H218.022C220.262 229.6 221.542 228.4 221.542 226.4C221.542 224.4 220.262 223.2 218.022 223.2ZM165.702 260H140.422V204H224.422C238.422 204 246.822 215.2 246.822 226.4C246.822 237.6 238.422 248.8 224.422 248.8H165.702V260Z" fill="white"/>
                 </svg>
             </button>
-            <button ref={tariffsRef} onClick={() => navigate('/tariffs')} className='cursor-pointer px-[20px] py-[10px] relative z-10'>
+            <button ref={tariffsRef} onClick={() => navigate('/tariffs')} className='cursor-pointer w-1/3 flex justify-center relative z-10'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 1024 1024"><path fill="#fff" d="M882 272.1V144c0-17.7-14.3-32-32-32H174c-17.7 0-32 14.3-32 32v128.1c-16.7 1-30 14.9-30 31.9v131.7a177 177 0 0 0 14.4 70.4c4.3 10.2 9.6 19.8 15.6 28.9v345c0 17.6 14.3 32 32 32h676c17.7 0 32-14.3 32-32V535a175 175 0 0 0 15.6-28.9c9.5-22.3 14.4-46 14.4-70.4V304c0-17-13.3-30.9-30-31.9M214 184h596v88H214zm362 656.1H448V736h128zm234 0H640V704c0-17.7-14.3-32-32-32H416c-17.7 0-32 14.3-32 32v136.1H214V597.9c2.9 1.4 5.9 2.8 9 4c22.3 9.4 46 14.1 70.4 14.1s48-4.7 70.4-14.1c13.8-5.8 26.8-13.2 38.7-22.1c.2-.1.4-.1.6 0a180.4 180.4 0 0 0 38.7 22.1c22.3 9.4 46 14.1 70.4 14.1c24.4 0 48-4.7 70.4-14.1c13.8-5.8 26.8-13.2 38.7-22.1c.2-.1.4-.1.6 0a180.4 180.4 0 0 0 38.7 22.1c22.3 9.4 46 14.1 70.4 14.1c24.4 0 48-4.7 70.4-14.1c3-1.3 6-2.6 9-4v242.2zm30-404.4c0 59.8-49 108.3-109.3 108.3c-40.8 0-76.4-22.1-95.2-54.9c-2.9-5-8.1-8.1-13.9-8.1h-.6c-5.7 0-11 3.1-13.9 8.1A109.24 109.24 0 0 1 512 544c-40.7 0-76.2-22-95-54.7c-3-5.1-8.4-8.3-14.3-8.3s-11.4 3.2-14.3 8.3a109.63 109.63 0 0 1-95.1 54.7C233 544 184 495.5 184 435.7v-91.2c0-.3.2-.5.5-.5h655c.3 0 .5.2.5.5z"/></svg>
             </button>
 
