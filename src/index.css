@@ -186,7 +186,6 @@
   position: sticky;
   bottom: 0;
   backdrop-filter: blur(10px);
-  background-color: rgba(0, 0, 0, 0.2);
   padding-block: calc(15px + env(safe-area-inset-bottom));
 }
 
