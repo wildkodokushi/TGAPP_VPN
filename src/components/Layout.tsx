@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 
+type AppTheme = 'space' | 'pink';
+
 export default function Layout() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -10,6 +12,14 @@ export default function Layout() {
     const tariffsRef = useRef(null);
 
     const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+    const [theme, setTheme] = useState<AppTheme>(() => {
+        const savedTheme = localStorage.getItem('app-theme');
+        return savedTheme === 'pink' ? 'pink' : 'space';
+    });
+
+    useEffect(() => {
+        localStorage.setItem('app-theme', theme);
+    }, [theme]);
 
     useEffect(() => {
         let activeRef = null;
@@ -41,7 +51,32 @@ export default function Layout() {
     }, [location.pathname]);
 
   return (
-    <div className="min-h-screen main-background flex flex-col justify-center items-center">
+    <div className={`min-h-screen main-background theme-${theme} flex flex-col justify-center items-center`}>
+
+        <div className='w-full max-w-[380px] flex justify-end px-[12px] pt-[10px]'>
+            <div className='relative theme-soft border border-white/20 rounded-full p-[3px] inline-grid grid-cols-2 w-[148px]'>
+                <div
+                  className='theme-primary-btn absolute top-[3px] bottom-[3px] left-[3px] w-[calc(50%_-_5px)] rounded-full transition-transform duration-300 pointer-events-none'
+                  style={{ transform: theme === 'space' ? 'translateX(0)' : 'translateX(calc(100% + 4px))' }}
+                />
+                <button
+                  type='button'
+                  onClick={() => setTheme('space')}
+                  className='relative z-10 h-[28px] px-[12px] rounded-full text-[11px] bounded-font cursor-pointer transition-colors'
+                  style={{ color: theme === 'space' ? 'var(--primary-text)' : 'rgba(255,255,255,0.7)' }}
+                >
+                  Space
+                </button>
+                <button
+                  type='button'
+                  onClick={() => setTheme('pink')}
+                  className='relative z-10 h-[28px] px-[12px] rounded-full text-[11px] bounded-font cursor-pointer transition-colors'
+                  style={{ color: theme === 'pink' ? 'var(--primary-text)' : 'rgba(255,255,255,0.7)' }}
+                >
+                  Pink
+                </button>
+            </div>
+        </div>
 
         {/* подгрузка основного контента */}
         <div className="">
@@ -52,7 +87,7 @@ export default function Layout() {
         <div className='footer relative w-[100%] mt-[auto] flex items-center justify-between p-[10px]'>
 
             <div
-              className="absolute bottom-[14px] left-0 h-[calc(100%-28px)] bg-black/30 border border-white/20 rounded-full transition-all duration-300 pointer-events-none"
+              className="footer-indicator absolute bottom-[14px] left-0 h-[calc(100%-28px)] border rounded-full transition-all duration-300 pointer-events-none"
               style={{ left: indicatorStyle.left + 12, width: Math.max(0, indicatorStyle.width - 24) }}
             />
 

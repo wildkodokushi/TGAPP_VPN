@@ -43,7 +43,7 @@ export default function MainPage() {
           </h1>
         </div>
 
-        <div className='bg-[rgba(255,255,255,0.04)] border-2 border-white/10 rounded-2xl w-[354px] p-[20px_15px_25px] my-[20px]'>
+        <div className='theme-card border-2 rounded-2xl w-[354px] p-[20px_15px_25px] my-[20px]'>
           <div className='flex flex-col items-center justify-between gap-2'>
             <div className='flex items-center gap-2 text-gray-700'>
               <div className='font-light text-base text-center text-white/70 bounded-font'>
@@ -66,7 +66,7 @@ export default function MainPage() {
                 )}
               </span>
             </div>
-            <button onClick={handleBuyClick} className='cursor-pointer w-[100%] bg-white inline-flex items-center h-[47px] px-5 text-black font-bold bounded-font text-base leading-none rounded-3xl justify-center text-center transition-colors hover:bg-white/90'>
+            <button onClick={handleBuyClick} className='theme-primary-btn cursor-pointer w-[100%] inline-flex items-center h-[47px] px-5 font-bold bounded-font text-base leading-none rounded-3xl justify-center text-center transition-colors'>
               Купить
             </button>
           </div>
@@ -75,17 +75,17 @@ export default function MainPage() {
             <span className='text-xl font-light text-white bounded-font'>
               Подписка <span className='text-xl font-light text-white bounded-font'>активна</span>
             </span>
-            <div className='w-[100%] inline-flex items-center h-[47px] px-5 text-white font-light text-[13px] border border-white/20 rounded-3xl bg-[rgba(255,255,255,0.03)] bounded-font justify-between'>
+            <div className='theme-soft w-[100%] inline-flex items-center h-[47px] px-5 text-white font-light text-[13px] border border-white/20 rounded-3xl bounded-font justify-between'>
               <span>до 15.02.2026</span>
               <span>3 устройства</span>
             </div>
           </div>
 
           <div className='flex justify-between items-center mt-[25px]'>
-            <a href='https://t.me/psychowarevpn' target='_blank' rel='noopener noreferrer' className='font-medium text-xs leading-none text-center text-white bounded-font cursor-pointer inline-flex items-center h-[35px] bg-black/50 rounded-3xl px-[30px]'>
+            <a href='https://t.me/psychowarevpn' target='_blank' rel='noopener noreferrer' className='theme-chip font-medium text-xs leading-none text-center text-white bounded-font cursor-pointer inline-flex items-center h-[35px] rounded-3xl px-[30px]'>
               Новости
             </a>
-            <a href='https://t.me/psychowaresupportxbot' target='_blank' rel='noopener noreferrer' className='font-medium text-xs leading-none text-center text-white bounded-font cursor-pointer inline-flex items-center h-[35px] bg-black/50 rounded-3xl px-[30px]'>
+            <a href='https://t.me/psychowaresupportxbot' target='_blank' rel='noopener noreferrer' className='theme-chip font-medium text-xs leading-none text-center text-white bounded-font cursor-pointer inline-flex items-center h-[35px] rounded-3xl px-[30px]'>
               Поддержка
             </a>
           </div>
