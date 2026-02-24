@@ -189,6 +189,113 @@
   padding-block: calc(15px + env(safe-area-inset-bottom));
 }
 
+.swipe-onboarding-overlay {
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(2px);
+}
+
+.swipe-onboarding-content {
+  width: 100%;
+  border-radius: 24px;
+  background: rgba(8, 8, 8, 0.74);
+  padding: 20px 16px;
+}
+
+.swipe-onboarding-track {
+  position: relative;
+  width: 100%;
+  height: 78px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.swipe-onboarding-animation {
+  position: absolute;
+  inset: 0;
+  animation: swipe-glide 1.95s ease-in-out infinite;
+}
+
+.swipe-onboarding-hand-icon {
+  position: absolute;
+  top: 50%;
+  left: 38%;
+  width: 54px;
+  height: 54px;
+  color: #f6f6f6;
+  transform: translate(-50%, -50%) rotate(-13deg);
+  filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.45));
+}
+
+.swipe-onboarding-trails {
+  position: absolute;
+  top: 50%;
+  left: calc(38% + 34px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform: translateY(-50%);
+}
+
+.swipe-onboarding-trail {
+  display: block;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  transform-origin: left center;
+  animation: swipe-trail-fade 1.95s ease-in-out infinite;
+}
+
+.swipe-onboarding-trail-top {
+  width: 24px;
+  animation-delay: 0.04s;
+}
+
+.swipe-onboarding-trail-mid {
+  width: 28px;
+  margin-left: 10px;
+  animation-delay: 0.1s;
+}
+
+.swipe-onboarding-trail-bottom {
+  width: 24px;
+  animation-delay: 0.16s;
+}
+
+@keyframes swipe-glide {
+  0% {
+    opacity: 0;
+    transform: translateX(-52px);
+  }
+  14% {
+    opacity: 1;
+  }
+  62% {
+    opacity: 1;
+    transform: translateX(56px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(74px);
+  }
+}
+
+@keyframes swipe-trail-fade {
+  0%,
+  20% {
+    opacity: 0;
+    transform: scaleX(0.35);
+  }
+  48% {
+    opacity: 0.95;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1.12);
+  }
+}
+
 @media (max-height: 620px) {
   .layout-content {
     align-items: flex-start;
