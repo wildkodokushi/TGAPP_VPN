@@ -1,0 +1,23 @@
+@use './helpers' as *;
+@use './fonts';
+
+:root {
+    --font-family: "Manrope", sans-serif;
+
+    --background-color-main: #892c97;
+    --background-color-black: #000;
+
+    --color-white: #fff;
+    --color-light-purple: rgba(200, 154, 193, 0.7);
+
+    --border-radius-1: #{rem(1)};
+    --border-radius-10: #{rem(10)};
+    --border-radius-20: #{rem(20)};
+    --border-radius-22: #{rem(22)};
+    --border-radius-26: #{rem(26)};
+
+    --container-width: #{rem(450)};
+    --padd-x: #{rem(10)};
+
+    --trasition-duration: 0.3s;
+}

@@ -1,0 +1,11 @@
+@use '../helpers/' as *;
+
+.logo {
+    @include square(40);
+    background-color: var(--background-color-black);
+    border-radius: var(--border-radius-10);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: rem(5);
+}

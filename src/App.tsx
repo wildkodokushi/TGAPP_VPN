@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import MainPage from './pages/Main';
-import TariffsPage from './pages/Tarifs';
-import CabinetPage from './pages/Cabinet';
-import ConnectPage from './pages/Connect';
+import SubscriptionPage from './pages/Subscription';
+import ReferralsPage from './pages/Referrals';
+import SupportPage from './pages/Support';
+import ProfilePage from './pages/Profile';
+
 
 function App() {
   return (
@@ -11,9 +13,10 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<MainPage />} />
-          <Route path="/connect" element={<ConnectPage />} />
-          <Route path="/tariffs" element={<TariffsPage />} />
-          <Route path="/cabinet" element={<CabinetPage />} />
+          <Route path="/subscription" element={<SubscriptionPage />} />
+          <Route path="/referrals" element={<ReferralsPage />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

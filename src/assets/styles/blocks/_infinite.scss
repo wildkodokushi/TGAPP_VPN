@@ -1,0 +1,11 @@
+@use '../helpers' as *; 
+
+.infinite {
+    position: relative;
+
+    &::after {
+        content: url(/src/assets/icon/home/∞.svg);
+        width: 26px;
+        height: 46px;
+    }
+}

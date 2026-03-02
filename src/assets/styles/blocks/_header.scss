@@ -1,0 +1,26 @@
+@use '../helpers/' as *;
+
+.header {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    height: rem(70);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    position: sticky;
+    top: 0;
+
+    &__row {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__logo {
+        display: flex;
+        align-items: center;
+        gap: rem(10);
+        font-size: rem(16);
+    }
+}

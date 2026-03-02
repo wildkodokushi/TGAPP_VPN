@@ -1,0 +1,19 @@
+@use './helpers' as *;
+
+body {
+    font-family: var(--font-family);
+    font-weight: 400;
+    color: var(--color-white);
+    transition: var(--trasition-duration);
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+}
+
+a, input, button {
+    color: inherit;
+}

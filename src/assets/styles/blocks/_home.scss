@@ -1,0 +1,121 @@
+@use '../helpers' as *;
+
+.home {
+    margin-top: rem(25);
+
+    &__row {
+        display: flex;
+        flex-direction: column;
+        gap: rem(20);
+
+        &-top {
+            display: flex;
+            flex-direction: column;
+            gap: rem(15);
+        }
+
+        &-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: rem(20);
+            background: rgba(21, 21, 21, 0.5);
+            border: 1px solid #892c97;
+            border-radius: var(--border-radius-20);
+            padding: rem(18) 0 rem(30) 0;
+        }
+
+        &-button {
+            height: rem(50);
+            background-color: var(--background-color-main);
+            padding-inline: rem(55);
+            border-radius: var(--border-radius-10);
+            font-weight: 700;
+            font-size: rem(20);
+            transition: var(--trasition-duration);
+
+            &:hover {
+                box-shadow: 0 4px 14px 2px rgba(137, 44, 151, 0.49);
+            }
+        }
+    }
+
+    &__title {
+        font-weight: 700;
+        font-size: rem(24);
+        text-align: left;
+    }
+
+    &__subtitle {
+        font-weight: 700;
+        font-size: rem(22);
+        text-align: center;
+    }
+
+    &__info {
+
+        &-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: rem(10);
+        }
+        
+        &-item {
+            background: rgba(21, 21, 21, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius-20);
+            padding: rem(20) rem(15);
+            cursor: pointer;
+        }
+
+        &-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            & span {
+                font-weight: 800;
+                font-size: rem(26);
+            }
+        }
+
+        &-subtitle {
+            font-size: rem(16);
+            color: rgba(255, 255, 255, 0.7);
+        }
+    }
+
+    &__free-trial {
+        font-weight: 400;
+        font-size: rem(14);
+        text-align: center;
+        color: #ca9dc3;
+
+        &-list {
+            width: 100%;
+            max-width: rem(358);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &-item {
+            width: rem(80);
+            height: rem(88);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: rem(5);
+            font-weight: 400;
+            font-size: rem(14);
+            color: #ca9dc3;
+        }
+
+        &-subtitle {
+            font-weight: 700;
+            font-size: rem(34);
+            text-align: center;
+            color: var(--color-white);
+        }
+    }
+}
