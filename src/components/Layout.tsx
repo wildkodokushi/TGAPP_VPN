@@ -71,9 +71,9 @@ export default function Layout() {
             </div>
 
             {/* main */}
-            <div className="">
+            <main className="main-container">
                 <Outlet />
-            </div>
+            </main>
 
             {/* footer */}
             <div className="footer">

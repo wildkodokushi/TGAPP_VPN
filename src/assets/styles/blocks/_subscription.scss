@@ -1,0 +1,155 @@
+@use '../helpers/' as *;
+
+.subscription {
+
+    &__inner {
+        width: 100%;
+    }
+
+    &__active {
+        margin-top: rem(15);
+        position: relative;
+        background: rgba(21, 21, 21, 0.5);
+        height: rem(244);
+        border: rem(1) solid var(--background-color-main);
+        border-radius: var(--border-radius-20);
+
+        &::after {
+            content: url(/src/assets/image/tariffs/fox-back.svg);
+            @include abs-center;
+        }
+
+        &-info {
+            height: 100%;
+            @include flex-center;
+            flex-direction: column;
+            text-align: center;
+            gap: rem(30);
+        }
+
+        &-subtitle {
+            font-weight: 700;
+            font-size: rem(22);
+        }
+
+        &-date {
+            font-weight: 400;
+            font-size: rem(20);
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        &-list {
+            width: rem(325);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &-item {
+            @include square(75);
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-details {
+
+            &-value {
+                position: relative;
+                font-weight: 700;
+                font-size: rem(40);
+            }
+
+            &-label {
+                font-weight: 400;
+                font-size: rem(15);
+                color: #9f9f9f;
+            }
+
+        }
+
+        &-none {
+            height: 100%;
+            @include flex-center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    }
+
+    &__tariffs {
+        margin-top: rem(25);
+        padding: rem(20) rem(25);
+        background: rgba(21, 21, 21, 0.5);
+        border: rem(1) solid rgba(255, 255, 255, 0.2);
+        border-radius: var(--border-radius-20);
+
+        &-list {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: rem(20);
+            margin-top: rem(20);
+        }
+
+        &-item {
+            border: rem(1) solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius-10);
+            padding: rem(20);
+            display: flex;
+            flex-direction: column;
+            gap: rem(15);
+            background: rgba(21, 21, 21, 0.5);
+
+            &:nth-child(2) {
+                position: relative;
+                border-color: var(--background-color-main);
+
+                &::after {
+                    content: 'Лучший выбор';
+                    position: absolute;
+                    display: inline-flex;
+                    align-items: center;
+                    border-radius: var(--border-radius-14);
+                    padding-inline: rem(20);
+                    left: 30%;
+                    top: -10px;
+                    font-weight: 700;
+                    font-size: rem(14);
+                    background-color: var(--background-color-main);
+                    box-shadow: 0 2px 4px 1px rgba(137, 44, 151, 0.25);
+                }
+            }
+        }
+
+        &-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &-features {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: rem(18);
+            color: rgba(255, 255, 255, 0.5);
+
+            & span {
+                display: flex;
+                align-items: center;
+                gap: rem(5);
+            }
+        }
+
+        &-button {
+            background-color: var(--background-color-main);
+            height: rem(43);
+            border-radius: var(--border-radius-10);
+            color: var(--color-white);
+            padding-inline: rem(58);
+            transition: var(--trasition-duration);
+
+            &:hover {
+                box-shadow: 0 4px 4px 0 rgba(137, 44, 151, 0.25);
+            }
+        }
+    }
+}

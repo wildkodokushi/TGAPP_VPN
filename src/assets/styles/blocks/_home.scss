@@ -1,8 +1,7 @@
 @use '../helpers' as *;
 
 .home {
-    margin-top: rem(25);
-
+    
     &__row {
         display: flex;
         flex-direction: column;
@@ -40,15 +39,7 @@
         }
     }
 
-    &__title {
-        font-weight: 700;
-        font-size: rem(24);
-        text-align: left;
-    }
-
     &__subtitle {
-        font-weight: 700;
-        font-size: rem(22);
         text-align: center;
     }
 

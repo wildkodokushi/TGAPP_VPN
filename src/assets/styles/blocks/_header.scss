@@ -9,6 +9,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     position: sticky;
     top: 0;
+    z-index: 1000;
 
     &__row {
         width: 100%;

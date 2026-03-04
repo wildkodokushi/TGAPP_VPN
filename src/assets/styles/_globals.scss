@@ -4,7 +4,10 @@ body {
     font-family: var(--font-family);
     font-weight: 400;
     color: var(--color-white);
-    transition: var(--trasition-duration);
+}
+
+.main-container {
+    padding-top: rem(25);
 }
 
 .button {
@@ -16,4 +19,15 @@ body {
 
 a, input, button {
     color: inherit;
+}
+
+h1, .h1 {
+    font-weight: 700;
+    font-size: rem(24);
+    text-align: left;
+}
+
+h2, .h2 {
+    font-weight: 700;
+    font-size: rem(22);
 }
