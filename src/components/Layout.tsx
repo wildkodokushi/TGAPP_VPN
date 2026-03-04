@@ -74,7 +74,7 @@ export default function Layout() {
             <main className="main-container">
                 <Outlet />
             </main>
-
+            
             {/* footer */}
             <div className="footer">
                 <div className="footer__row">

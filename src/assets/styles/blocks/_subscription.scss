@@ -33,7 +33,6 @@
         }
 
         &-date {
-            font-weight: 400;
             font-size: rem(20);
             color: rgba(255, 255, 255, 0.4);
         }
@@ -60,7 +59,6 @@
             }
 
             &-label {
-                font-weight: 400;
                 font-size: rem(15);
                 color: #9f9f9f;
             }
@@ -111,7 +109,6 @@
                     left: 30%;
                     top: -10px;
                     font-weight: 700;
-                    font-size: rem(14);
                     background-color: var(--background-color-main);
                     box-shadow: 0 2px 4px 1px rgba(137, 44, 151, 0.25);
                 }

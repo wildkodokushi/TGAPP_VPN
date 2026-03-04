@@ -16,7 +16,7 @@ export default function MainPage() {
             <ul className="home__info-list">
               <li className="home__info-item">
                 <div className="home__info-row">
-                  <h3 className="home__info-subtitle">Ваш баланс</h3>
+                  <h3 className="home__info-subtitle h3">Ваш баланс</h3>
                   <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 6.83333H14.3333M14.3333 6.83333L8.5 1M14.3333 6.83333L8.5 12.6667" stroke="white" stroke-opacity="0.3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
@@ -25,7 +25,7 @@ export default function MainPage() {
               </li>
               <li className="home__info-item">
                 <div className="home__info-row">
-                  <h3 className="home__info-subtitle">Подписка</h3>
+                  <h3 className="home__info-subtitle h3">Подписка</h3>
                   <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 6.83333H14.3333M14.3333 6.83333L8.5 1M14.3333 6.83333L8.5 12.6667" stroke="white" stroke-opacity="0.3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
@@ -34,7 +34,7 @@ export default function MainPage() {
               </li>
               <li className="home__info-item">
                 <div className="home__info-row">
-                  <h3 className="home__info-subtitle">Рефералы</h3>
+                  <h3 className="home__info-subtitle h3">Рефералы</h3>
                   <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 6.83333H14.3333M14.3333 6.83333L8.5 1M14.3333 6.83333L8.5 12.6667" stroke="white" stroke-opacity="0.3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
@@ -43,7 +43,7 @@ export default function MainPage() {
               </li>
               <li className="home__info-item">
                 <div className="home__info-row">
-                  <h3 className="home__info-subtitle">Дни с реф-ов</h3>
+                  <h3 className="home__info-subtitle h3">Дни с реф-ов</h3>
                   <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 6.83333H14.3333M14.3333 6.83333L8.5 1M14.3333 6.83333L8.5 12.6667" stroke="white" stroke-opacity="0.3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>

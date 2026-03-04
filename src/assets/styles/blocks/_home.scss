@@ -76,9 +76,7 @@
         }
     }
 
-    &__free-trial {
-        font-weight: 400;
-        font-size: rem(14);
+    &__free-trial {        
         text-align: center;
         color: #ca9dc3;
 
@@ -96,9 +94,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: rem(5);
-            font-weight: 400;
-            font-size: rem(14);
+            gap: rem(5);            
             color: #ca9dc3;
         }
 
