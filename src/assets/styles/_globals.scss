@@ -37,3 +37,18 @@ h3, .h3 {
     font-weight: 700;
     font-size: rem(16);
 }
+
+@supports(interpolate-size: allow-keywords){
+    :root {
+        interpolate-size: allow-keywords;
+    }
+    [open]::details-content {
+        height: auto;
+    }
+}
+
+::details-content {
+    transition: height 0.5s ease, content-visibility 0.5s ease allow-discrete;
+    height: 0;
+    overflow: clip;
+}

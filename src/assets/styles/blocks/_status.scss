@@ -1,0 +1,39 @@
+@use '../helpers/' as *;
+
+.status-button {
+    display: inline-flex;
+    align-items: center;
+    height: rem(22);
+    border-radius: var(--border-radius-10);
+    padding-inline: rem(15);
+    font-weight: 700;
+    color: var(--color-white);
+}
+
+.statusРешено {
+    background: #319137;
+}
+
+.statusНарассмотрении {
+    background: #916431;
+}
+
+.Replied {
+    position: relative;
+    background: #316391;
+    
+    &::after {
+        content: '';
+        position: absolute;
+        @include square(rem(10));
+        right: 0;
+        top: rem(-3);
+        border-radius: var(--border-radius-full);
+        background-color: #f00;
+        box-shadow: 0 0 8px 0 rgba(255, 0, 0, 0.25);
+    }
+}
+
+.statusОтклонено {
+    background: #913131;
+}

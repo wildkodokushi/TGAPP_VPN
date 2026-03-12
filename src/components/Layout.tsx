@@ -78,7 +78,7 @@ export default function Layout() {
             {/* footer */}
             <div className="footer">
                 <div className="footer__row">
-                    <div className='footer__indicator' style={{ left: indicatorStyle.left, width: indicatorStyle.width}}/>
+                    <div className='footer__indicator indicator' style={{ left: indicatorStyle.left, width: indicatorStyle.width}}/>
                     <nav className="footer__menu">
                         <ul className="footer__menu-list">
                             <li className="footer__menu-item">
