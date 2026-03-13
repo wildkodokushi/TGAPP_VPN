@@ -21,7 +21,7 @@ export default function MainPage() {
                     <path d="M1 6.83333H14.3333M14.3333 6.83333L8.5 1M14.3333 6.83333L8.5 12.6667" stroke="white" stroke-opacity="0.3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                 </div>
-                <span>99₽</span>
+                <span><span className="h1">99</span><span className="h4">₽</span></span>
               </li>
               <li className="home__info-item">
                 <div className="home__info-row">
@@ -30,7 +30,7 @@ export default function MainPage() {
                     <path d="M1 6.83333H14.3333M14.3333 6.83333L8.5 1M14.3333 6.83333L8.5 12.6667" stroke="white" stroke-opacity="0.3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                 </div>
-                <span>Активна</span>
+                <span className="h1">Активна</span>
               </li>
               <li className="home__info-item">
                 <div className="home__info-row">
@@ -39,7 +39,7 @@ export default function MainPage() {
                     <path d="M1 6.83333H14.3333M14.3333 6.83333L8.5 1M14.3333 6.83333L8.5 12.6667" stroke="white" stroke-opacity="0.3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                 </div>
-                <span>3</span>
+                <span className="h1">3</span>
               </li>
               <li className="home__info-item">
                 <div className="home__info-row">
@@ -48,7 +48,7 @@ export default function MainPage() {
                     <path d="M1 6.83333H14.3333M14.3333 6.83333L8.5 1M14.3333 6.83333L8.5 12.6667" stroke="white" stroke-opacity="0.3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                 </div>
-                <span>+30 дн.</span>
+                <span className="h1">+30 дн.</span>
               </li>
             </ul>
           </div>

@@ -15,5 +15,6 @@
         height: rem(2);
         border-radius: var(--border-radius-1);
         background: rgba(255, 255, 255, 0.2);
+        flex-shrink: 0;
     }
 }

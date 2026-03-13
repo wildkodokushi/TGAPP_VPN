@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 
 export default function ReferralsPage() {
-    const [copied, setCopied] = useState(false); // для галочки? если убираем иконку, можно просто showMessage
+
     const [showCopyMessage, setShowCopyMessage] = useState(false);
     const linkRef = useRef<HTMLSpanElement>(null);
 
