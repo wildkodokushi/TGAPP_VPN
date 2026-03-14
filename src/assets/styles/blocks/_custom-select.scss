@@ -26,13 +26,14 @@
         }
 
         &.open .custom-select-arrow {
-            transform: rotate(180deg);
+            transform: rotate(0deg);
         }
     }
 
     &-arrow {
         display: flex;
         transition: var(--transition-duration);
+        transform: rotate(180deg);
     }
 
     &-dropdown {

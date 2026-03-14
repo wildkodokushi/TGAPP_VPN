@@ -1,0 +1,57 @@
+@use '../helpers/' as *;
+
+.toggle {
+
+    &-switch {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    &-input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+
+        &:checked + .toggle-slider::after {
+            background-color: #892c97;
+            transform: translateX(rem(26));
+        }
+    }
+
+    &-slider {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        width: rem(54);
+        height: rem(27);
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: var(--border-radius-14);
+
+        &::after {
+            content: '';
+            position: absolute;
+            @include square(rem(20));
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius-full);
+            transition: transform var(--transition-duration);
+            margin-inline: rem(4);
+        }
+    }
+
+    &-label {
+        font-weight: 700;
+        font-size: rem(20);
+        text-wrap: nowrap;
+    }
+}
+
+.no-active {
+    font-size: rem(20);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
+}

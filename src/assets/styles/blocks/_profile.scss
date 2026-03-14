@@ -1,0 +1,98 @@
+@use '../helpers/' as *;
+
+.profile {
+
+    &__inner {
+        margin-top: rem(15);
+        display: flex;
+        flex-direction: column;
+        gap: rem(20);
+
+    }
+
+    &__info {
+
+        &-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: rem(10);
+        }
+
+        &-item {
+            border: rem(1) solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius-20);
+            background: rgba(21, 21, 21, 0.5);
+            padding: rem(20) rem(15);
+            display: flex;
+            flex-direction: column;
+            gap: rem(17);
+        }
+
+        &-field {
+            font-weight: 700;
+            font-size: rem(16);
+            color: rgba(255, 255, 255, 0.7);
+        }
+    }
+
+    &__referral {
+        margin: 0;
+
+        &-link {
+            position: relative;
+        }
+
+        &-notification {
+            left: rem(12);
+        }
+    }
+
+    &__button {
+        justify-content: center;
+        height: rem(50);
+        background-color: var(--background-color-main);
+        border-radius: var(--border-radius-10);
+        font-weight: 700;
+        font-size: rem(20);
+    }
+
+    &__settings {
+        border: rem(1) solid rgba(255, 255, 255, 0.2);
+        border-radius: var(--border-radius-20);
+        background: rgba(21, 21, 21, 0.5);
+        padding: rem(21) rem(25) rem(46) rem(25);
+        display: flex;
+        flex-direction: column;
+        gap: rem(25);
+
+        &-notification {
+            display: flex;
+            flex-direction: column;
+            gap: rem(5);
+        }
+
+        &-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            & label {
+                max-width: rem(208);
+                text-wrap: wrap;
+            }
+        }
+
+        &-list {
+            display: flex;
+            flex-direction: column;
+            gap: rem(13);
+        }
+
+        &-item {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: rem(12);
+            border-bottom: rem(1) solid rgba(255, 255, 255, 0.1);
+        }
+    }
+}
