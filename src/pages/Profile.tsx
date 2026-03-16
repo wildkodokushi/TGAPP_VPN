@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 const ToggleSwitch = ({ checked, onChange, label }: { checked: boolean; onChange: (checked: boolean) => void; label: string }) => (
     <label className='toggle-switch'>
@@ -7,6 +7,30 @@ const ToggleSwitch = ({ checked, onChange, label }: { checked: boolean; onChange
         <span className='toggle-slider'></span>
     </label>
 );
+
+// Ключ для localStorage
+const STORAGE_KEY = 'profile-settings';
+
+// Значения по умолчанию
+const defaultSettings = {
+    expiryReminder: false,
+    daysBefore: 14,
+    newsEnabled: false,
+    rafflesEnabled: true,
+    promosEnabled: true,
+};
+
+const loadSettings = () => {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            return JSON.parse(saved);
+        }
+    } catch (error) {
+        console.error('Failed to load settings:', error);
+    }
+    return defaultSettings;
+};
 
 export default function CabinetPage() {
     const [showCopyMessage, setShowCopyMessage] = useState(false);
@@ -24,13 +48,26 @@ export default function CabinetPage() {
         }
     };
 
-    const [expiryReminder, setExpiryReminder] = useState(false);
-    const [daysBefore, setDaysBefore] = useState(14);
-    const [newsEnabled, setNewsEnabled] = useState(false);
-    const [rafflesEnabled, setRafflesEnabled] = useState(false);
-    const [promosEnabled, setPromosEnabled] = useState(true);
+  // Инициализация настроек из localStorage
+  const [expiryReminder, setExpiryReminder] = useState(loadSettings().expiryReminder);
+  const [daysBefore, setDaysBefore] = useState(loadSettings().daysBefore);
+  const [newsEnabled, setNewsEnabled] = useState(loadSettings().newsEnabled);
+  const [rafflesEnabled, setRafflesEnabled] = useState(loadSettings().rafflesEnabled);
+  const [promosEnabled, setPromosEnabled] = useState(loadSettings().promosEnabled);
 
-    const daysOptions = [1, 3, 7, 14];
+  const daysOptions = [1, 3, 7, 14];
+
+  // Сохранение всех настроек в localStorage при любом изменении
+  useEffect(() => {
+    const settings = {
+        expiryReminder,
+        daysBefore,
+        newsEnabled,
+        rafflesEnabled,
+        promosEnabled,
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+  }, [expiryReminder, daysBefore, newsEnabled, rafflesEnabled, promosEnabled]);
 
 
     return(
