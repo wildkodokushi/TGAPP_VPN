@@ -1,5 +1,65 @@
 import { useRef, useState, useEffect } from 'react';
 
+// Кастомный селект (как на странице поддержки)
+const CustomSelect = ({
+    options,
+    value,
+    onChange,
+    disabled = false,
+    placeholder = 'Выберите',
+}: {
+    options: number[];
+    value: number;
+    onChange: (value: number) => void;
+    disabled?: boolean;
+    placeholder?: string;
+}) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const selectedOption = value;
+
+    const handleSelect = (opt: number) => {
+        if (disabled) return;
+        onChange(opt);
+        setIsOpen(false);
+    };
+
+    return (
+        <div className={`custom-select-container ${disabled ? 'disabled' : ''}`} ref={containerRef}>
+            <div className={`custom-select-header custom-select-header-profile  ${isOpen ? 'open' : ''} ${disabled ? 'disabled' : ''}`} onClick={() => !disabled && setIsOpen(!isOpen)} >
+                <span className="custom-select-value">
+                    {selectedOption !== undefined ? `${selectedOption}` : placeholder}
+                </span>
+                <span className="custom-select-arrow">
+                    <svg width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 5.7706L9.212 7.55859L5.24 3.4666L1.268 7.55859L-0.519981 5.7706L5.24 -0.00140238L11 5.7706Z" fill="white" />
+                    </svg>
+                </span>
+            </div>
+            {isOpen && !disabled && (
+                <ul className="custom-select-dropdown">
+                    {options.map((opt) => (
+                        <li key={opt} className={`custom-select-option ${opt === value ? 'selected' : ''}`} onClick={() => handleSelect(opt)} >
+                            {opt}
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+};
+
 const ToggleSwitch = ({ checked, onChange, label }: { checked: boolean; onChange: (checked: boolean) => void; label: string }) => (
     <label className='toggle-switch'>
         <span className='toggle-label'>{label}</span>
@@ -136,13 +196,7 @@ export default function CabinetPage() {
                         <ul className="profile__settings-list">
                             <li className="profile__settings-item">
                                 <label className="profile__settings-label no-active">Дней до окончания</label>
-                                <select value={daysBefore} onChange={(e) => setDaysBefore(Number(e.target.value))} disabled={!expiryReminder} >
-                                    {daysOptions.map((days) => (
-                                        <option key={days} value={days}>
-                                            {days}
-                                        </option>
-                                    ))}
-                                </select>
+                                <CustomSelect options={daysOptions} value={daysBefore} onChange={setDaysBefore} disabled={!expiryReminder} placeholder="дней" />
                             </li>
                             <li className="profile__settings-item">
                                  <ToggleSwitch checked={newsEnabled} onChange={setNewsEnabled} label="Уведомления о новостях" />

@@ -5,6 +5,7 @@
     &-container {
         max-width: rem(226);
         position: relative;
+        z-index: 1000;
     }
 
     &-header {
@@ -13,6 +14,7 @@
         border-radius: var(--border-radius-11);
         display: flex;
         align-items: center;
+        gap: rem(5);
         justify-content: space-between;
         height: rem(40);
         padding-inline: rem(10);
@@ -52,6 +54,7 @@
         align-items: center;
         height: rem(35);
         padding-left: rem(10);
+        cursor: pointer;
 
         &:hover {
             background: rgba(210, 0, 255, 0.2);
@@ -62,4 +65,8 @@
             color: #fff;
         }
     }
+}
+
+.custom-select-header-profile {
+    height: rem(30) !important;
 }

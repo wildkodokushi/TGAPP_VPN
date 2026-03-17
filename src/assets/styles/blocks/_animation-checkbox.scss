@@ -9,6 +9,11 @@
         align-items: center;
         cursor: pointer;
         user-select: none;
+
+        &:has(.toggle-input:checked) .toggle-label {
+            color: var(--color-white);
+            // font-weight: 700;
+        }
     }
 
     &-input {
@@ -44,14 +49,14 @@
     }
 
     &-label {
-        font-weight: 700;
-        font-size: rem(20);
-        text-wrap: nowrap;
+        transition: all var(--transition-duration);
     }
 }
 
-.no-active {
-    font-size: rem(20);
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.5);
+.profile__settings-notification:has(.profile__settings-main .toggle-input:checked) .no-active {
+    color: var(--color-white);
+}
+
+.disabled {
+    opacity: 0.5;
 }

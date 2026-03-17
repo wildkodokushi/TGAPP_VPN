@@ -18,9 +18,7 @@ function CustomSelect({ options, value, onChange, placeholder }: any) {
 
     return (
         <div className="custom-select-container" ref={containerRef}>
-            <div
-                className={`custom-select-header ${isOpen ? 'open' : ''}`}
-                onClick={() => setIsOpen(!isOpen)}>
+            <div className={`custom-select-header ${isOpen ? 'open' : ''}`} onClick={() => setIsOpen(!isOpen)}>
                     <span className="custom-select-value">
                         {selectedOption ? selectedOption.label : placeholder}
                     </span>
@@ -48,17 +46,16 @@ function CustomSelect({ options, value, onChange, placeholder }: any) {
 }
 
 export default function SupportPage() {
-
     const detailsRef = useRef<HTMLDetailsElement>(null);
     const [hasActiveTicket] = useState(false);
     const [selectedTheme, setSelectedTheme] = useState('no-work');
 
-  const themeOptions = [
-    { value: 'no-work', label: 'Не работает VPN' },
-    { value: 'slow', label: 'Медленная скорость' },
-    { value: 'connection', label: 'Проблемы с подключением' },
-    { value: 'other', label: 'Другое' },
-  ];
+    const themeOptions = [
+        { value: 'no-work', label: 'Не работает VPN' },
+        { value: 'slow', label: 'Медленная скорость' },
+        { value: 'connection', label: 'Проблемы с подключением' },
+        { value: 'other', label: 'Другое' },
+    ];
 
     const tickets = [
         { id: 1, title: 'Не работает VPN', preview: 'Здравствуйте, не могу подключи...', status: 'Решено', date: '12.06.2026 13:00', },
