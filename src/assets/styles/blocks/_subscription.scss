@@ -9,7 +9,7 @@
     &__active {
         margin-top: rem(15);
         position: relative;
-        background: rgba(21, 21, 21, 0.5);
+        background: var(--background-block);
         height: rem(244);
         border: rem(1) solid var(--background-color-main);
         border-radius: var(--border-radius-20);
@@ -75,8 +75,8 @@
     &__tariffs {
         margin-top: rem(25);
         padding: rem(20) rem(25);
-        background: rgba(21, 21, 21, 0.5);
-        border: rem(1) solid rgba(255, 255, 255, 0.2);
+        background: var(--background-block);
+        border: var(--border-block);
         border-radius: var(--border-radius-20);
 
         &-list {
@@ -87,13 +87,13 @@
         }
 
         &-item {
-            border: rem(1) solid rgba(255, 255, 255, 0.2);
+            border: var(--border-block);
             border-radius: var(--border-radius-10);
             padding: rem(20);
             display: flex;
             flex-direction: column;
             gap: rem(15);
-            background: rgba(21, 21, 21, 0.5);
+            background: var(--background-block);
 
             &:nth-child(2) {
                 position: relative;

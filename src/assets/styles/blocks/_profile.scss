@@ -19,9 +19,9 @@
         }
 
         &-item {
-            border: rem(1) solid rgba(255, 255, 255, 0.2);
+            border: var(--border-block);
             border-radius: var(--border-radius-20);
-            background: rgba(21, 21, 21, 0.5);
+            background: var(--background-block);
             padding: rem(20) rem(15);
             display: flex;
             flex-direction: column;
@@ -57,9 +57,9 @@
     }
 
     &__settings {
-        border: rem(1) solid rgba(255, 255, 255, 0.2);
+        border: var(--border-block);
         border-radius: var(--border-radius-20);
-        background: rgba(21, 21, 21, 0.5);
+        background: var(--background-block);
         padding: rem(21) rem(25) rem(46) rem(25);
         display: flex;
         flex-direction: column;

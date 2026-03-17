@@ -24,4 +24,19 @@
         gap: rem(10);
         font-size: rem(16);
     }
+
+    &__button {
+        
+        &-link {
+            padding-inline: rem(13);
+            height: rem(38);
+            border: rem(1) solid rgba(137, 44, 151, 0.7);
+            border-radius: var(--border-radius-10);
+            background: rgba(137, 44, 151, 0.1);
+            text-decoration: none;
+            gap: rem(10);
+            font-weight: 600;
+            font-size: rem(16);
+        }
+    }
 }

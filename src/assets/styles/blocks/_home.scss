@@ -18,7 +18,7 @@
             flex-direction: column;
             align-items: center;
             gap: rem(20);
-            background: rgba(21, 21, 21, 0.5);
+            background: var(--background-block);
             border: 1px solid #892c97;
             border-radius: var(--border-radius-20);
             padding: rem(18) 0 rem(30) 0;
@@ -52,7 +52,7 @@
         }
         
         &-item {
-            background: rgba(21, 21, 21, 0.5);
+            background: var(--background-block);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: var(--border-radius-20);
             padding: rem(20) rem(15);

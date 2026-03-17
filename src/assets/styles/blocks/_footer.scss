@@ -7,14 +7,16 @@
     align-items: center;
     height: rem(84);
     backdrop-filter: blur(5px);
-    background: rgba(21, 21, 21, 0.5);
+    background: var(--background-block);
     border-radius: var(--border-radius-26);
     margin-top: auto;
     position: sticky;
     bottom: 0;
 
     &__row {
+        max-width: rem(480);
         margin: 0 auto;
+        overflow: hidden;
         height: 100%;
         position: relative;
         display: flex;
@@ -23,6 +25,7 @@
     }
     
     &__menu {
+        
         &-list {
             width: 100%;
             display: flex;
@@ -31,14 +34,26 @@
         }
 
         &-button {
+            width: rem(90);
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: rem(5);
             background-color: transparent;
-            color: var(--color-white);
+            color: rgba(186, 89, 171, 0.7);
             border: none;
             font-size: rem(12);
-            padding-inline: rem(15);
+            font-weight: 700;
+            padding-inline: rem(5);
+
+            & p {
+                color: rgba(200, 154, 193, 0.7); 
+            }
+
+            &.active, &.active p {
+                color: var(--color-white);
+                fill: var(--color-white);
+            }
         }
     }
 
@@ -46,10 +61,10 @@
         position: absolute;
         left: 0;
         height: 85%;
-        background: #2b0f28;
+        border: rem(1) solid #892c97;
         border-radius: var(--border-radius-22);
-        transition: left 0.3s ease, width 0.3s ease;
+        transition: left var(--transition-duration) ease, width var(--transition-duration) ease;
         pointer-events: none;
-        z-index: -1;
+        z-index: -1;     
     }
 }

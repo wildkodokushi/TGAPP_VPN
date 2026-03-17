@@ -42,8 +42,8 @@
             display: flex;
             flex-direction: column;
             gap: rem(10);
-            background: rgba(21, 21, 21, 0.5);
-            border: rem(1) solid rgba(255, 255, 255, 0.2);
+            background: var(--background-block);
+            border: var(--border-block);
             border-radius: 0 0 var(--border-radius-20) var(--border-radius-20);
             gap: rem(10);
             padding-inline: rem(18);
@@ -115,8 +115,8 @@
         row-gap: rem(20);
 
         &-check {
-            background: rgba(21, 21, 21, 0.5);
-            border: rem(1) solid rgba(255, 255, 255, 0.2);
+            background: var(--background-block);
+            border: var(--border-block);
             border-radius: var(--border-radius-20);
             padding: rem(20) rem(25);
             height: rem(420);
@@ -130,7 +130,7 @@
         }
 
         &-item {
-            border-top: rem(1) solid rgba(255, 255, 255, 0.2);
+            border-top: var(--border-block);
             padding-top: rem(15);
             display: flex;
             flex-direction: column;
