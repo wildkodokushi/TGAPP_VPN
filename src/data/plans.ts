@@ -7,7 +7,7 @@ export type Plan = {
 export type PlanVariant = 'subscription' | 'gift';
 
 export const PLANS: Plan[] = [
-    { id: 'month',   title: 'Месяц',     price: '99'  },
+    { id: 'month',   title: '1 Месяц',   price: '99'  },
     { id: '3months', title: '3 месяца',  price: '259' },
     { id: '6months', title: '6 месяцев', price: '499' },
     { id: 'year',    title: '1 год',     price: '899' },

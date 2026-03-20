@@ -2,55 +2,71 @@ import { useEffect, useRef, useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/icon/logo.svg';
 
+const PATH_TO_TAB: Record<string, string> = {
+    '/':             '/',
+    '/subscription': '/subscription',
+    '/checkout':     '/subscription',
+    '/referrals':    '/referrals',
+    '/support':      '/support',
+    '/profile':      '/profile',
+};
+ 
+const OVERLAY_LINKS = [
+    { label: 'Поддержка', href: '/support' },
+    { label: 'Информация', href: '/info' },
+    { label: 'Админ-панель', href: '/admin' },
+];
 
 export default function Layout() {
     const navigate = useNavigate();
     const location = useLocation();
-
+ 
     const homeRef = useRef<HTMLButtonElement>(null);
     const subscriptionRef = useRef<HTMLButtonElement>(null);
     const referralsRef = useRef<HTMLButtonElement>(null);
-    const supportRef = useRef<HTMLButtonElement>(null);
     const profileRef = useRef<HTMLButtonElement>(null);
-
+ 
     const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
-
+    const [overlayOpen, setOverlayOpen] = useState(false);
+ 
+    // Определяем активный таб с учётом дочерних путей
+    const activeTab = PATH_TO_TAB[location.pathname] ?? '/';
+ 
     const updateIndicator = () => {
-        let activeRef = homeRef;
-        switch (location.pathname) {
-            case '/subscription':
-                activeRef = subscriptionRef;
-                break;
-            case '/referrals':
-                activeRef = referralsRef;
-                break;
-            case '/support':
-                activeRef = supportRef;
-                break;
-            case '/profile':
-                activeRef = profileRef;
-                break;
-            default:
-                activeRef = homeRef;
-        }
+        const refMap = {
+            '/':             homeRef,
+            '/subscription': subscriptionRef,
+            '/referrals':    referralsRef,
+            '/profile':      profileRef,
+        };
+ 
+        const activeRef = refMap[activeTab as keyof typeof refMap];
 
         if (activeRef?.current) {
             const { offsetLeft, offsetWidth } = activeRef.current;
             setIndicatorStyle({ left: offsetLeft, width: offsetWidth });
         }
     };
-
+ 
     useEffect(() => {
         updateIndicator();
-    }, [location.pathname]);
-
+    }, [activeTab]);
+ 
     useEffect(() => {
         window.addEventListener('resize', updateIndicator);
         return () => window.removeEventListener('resize', updateIndicator);
     }, []);
-
-    const isActive = (path: string) => location.pathname === path;
-
+ 
+    useEffect(() => {
+        setOverlayOpen(false);
+    }, [location.pathname]);
+ 
+    const isActive = (path: string) => activeTab === path;
+ 
+    const handleOverlayLink = (href: string) => {
+        setOverlayOpen(false);
+        navigate(href);
+    };
     return (
         <div className="wrapper">
 
@@ -76,9 +92,24 @@ export default function Layout() {
             <main className="main-container">
                 <Outlet />
             </main>
+
+            {overlayOpen && (
+                <div className="footer-backdrop" onClick={() => setOverlayOpen(false)} />
+            )}
             
             {/* footer */}
-            <div className="footer">
+            <div className="footer container">
+                <div className={`footer-overlay${overlayOpen ? ' footer-overlay--open' : ''}`}>
+                    <ul className="footer-overlay__list">
+                        {OVERLAY_LINKS.map((link) => (
+                            <li key={link.href} className="footer-overlay__item">
+                                <button className="footer-overlay__link button" onClick={() => handleOverlayLink(link.href)} >
+                                    {link.label}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
                 <div className="footer__row">
                     <div className='footer__indicator indicator' style={{ left: indicatorStyle.left, width: indicatorStyle.width}}/>
                     <nav className="footer__menu">
@@ -120,20 +151,13 @@ export default function Layout() {
                                 </button>
                             </li>
                             <li className="footer__menu-item">
-                                <button className={`footer__menu-button`}>
+                                <button className={`footer__menu-button${overlayOpen ? ' active' : ''}`} onClick={() => setOverlayOpen((prev) => !prev)} >
                                     <svg width="25" height="7" viewBox="0 0 25 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M6.13668 3.15309C6.13668 1.43322 4.74198 0 3.06834 0C1.35983 0 0 1.43322 0 3.15309C0 4.87296 1.35983 6.30619 3.06834 6.30619C4.74198 6.30619 6.13668 4.87296 6.13668 3.15309ZM15.5509 3.15309C15.5509 1.43322 14.1562 0 12.4826 0C10.8089 0 9.41423 1.43322 9.41423 3.15309C9.41423 4.87296 10.8089 6.30619 12.4826 6.30619C14.1562 6.30619 15.5509 4.87296 15.5509 3.15309ZM25 3.15309C25 1.43322 23.6402 0 21.9317 0C20.258 0 18.8633 1.43322 18.8633 3.15309C18.8633 4.87296 20.258 6.30619 21.9317 6.30619C23.6402 6.30619 25 4.87296 25 3.15309Z" fill="#BA59AB" />
                                     </svg>
+                                    <p>Прочее</p>
                                 </button>
                             </li>
-                            {/* <li className="footer__menu-item">
-                                <button className={`footer__menu-button ${isActive('/support') ? 'active' : ''}`} ref={supportRef} onClick={() => navigate('/support')}>
-                                    <svg width="26" height="26" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M11.7189 13.125C11.7189 13.498 11.8671 13.8556 12.1308 14.1194C12.3945 14.3831 12.7522 14.5312 13.1252 14.5312C13.4981 14.5312 13.8558 14.3831 14.1195 14.1194C14.3833 13.8556 14.5314 13.498 14.5314 13.125C14.5314 12.752 14.3833 12.3944 14.1195 12.1306C13.8558 11.8669 13.4981 11.7188 13.1252 11.7188C12.7522 11.7188 12.3945 11.8669 12.1308 12.1306C11.8671 12.3944 11.7189 12.752 11.7189 13.125ZM17.5783 13.125C17.5783 13.498 17.7264 13.8556 17.9902 14.1194C18.2539 14.3831 18.6116 14.5312 18.9845 14.5312C19.3575 14.5312 19.7152 14.3831 19.9789 14.1194C20.2426 13.8556 20.3908 13.498 20.3908 13.125C20.3908 12.752 20.2426 12.3944 19.9789 12.1306C19.7152 11.8669 19.3575 11.7188 18.9845 11.7188C18.6116 11.7188 18.2539 11.8669 17.9902 12.1306C17.7264 12.3944 17.5783 12.752 17.5783 13.125ZM5.85954 13.125C5.85954 13.498 6.0077 13.8556 6.27142 14.1194C6.53514 14.3831 6.89283 14.5312 7.26579 14.5312C7.63875 14.5312 7.99644 14.3831 8.26016 14.1194C8.52388 13.8556 8.67204 13.498 8.67204 13.125C8.67204 12.752 8.52388 12.3944 8.26016 12.1306C7.99644 11.8669 7.63875 11.7188 7.26579 11.7188C6.89283 11.7188 6.53514 11.8669 6.27142 12.1306C6.0077 12.3944 5.85954 12.752 5.85954 13.125ZM25.2306 8.03906C24.5685 6.46582 23.6193 5.05371 22.4093 3.84082C21.2078 2.63495 19.7815 1.67643 18.2111 1.01953C16.5998 0.342774 14.8888 0 13.1252 0H13.0666C11.2912 0.00878906 9.57146 0.360352 7.95427 1.05176C6.39731 1.71539 4.98434 2.67562 3.79411 3.87891C2.59587 5.08887 1.65544 6.49512 1.00505 8.0625C0.331221 9.68555 -0.00862285 11.4111 0.000166209 13.1865C0.0101074 15.2211 0.491451 17.2257 1.40642 19.043V23.4961C1.40642 23.8535 1.5484 24.1963 1.80114 24.449C2.05387 24.7018 2.39665 24.8438 2.75407 24.8438H7.21013C9.02739 25.7587 11.032 26.2401 13.0666 26.25H13.1281C14.883 26.25 16.5851 25.9102 18.1877 25.2451C19.7501 24.596 21.1712 23.6487 22.3713 22.4561C23.5812 21.2578 24.5334 19.8574 25.1984 18.2959C25.8898 16.6787 26.2414 14.959 26.2502 13.1836C26.259 11.3994 25.9132 9.66797 25.2306 8.03906ZM20.8039 20.8711C18.7502 22.9043 16.0256 24.0234 13.1252 24.0234H13.0754C11.3088 24.0146 9.55388 23.5752 8.00407 22.749L7.75798 22.6172H3.63298V18.4922L3.50114 18.2461C2.67497 16.6963 2.23552 14.9414 2.22673 13.1748C2.21501 10.2539 3.33122 7.51172 5.37907 5.44629C7.42399 3.38086 10.1574 2.23828 13.0783 2.22656H13.1281C14.5929 2.22656 16.0138 2.51074 17.3527 3.07324C18.6593 3.62109 19.8312 4.40918 20.839 5.41699C21.8439 6.42188 22.6349 7.59668 23.1828 8.90332C23.7511 10.2568 24.0353 11.6924 24.0295 13.1748C24.0119 16.0928 22.8664 18.8262 20.8039 20.8711Z" fill="#BA59AB" fill-opacity="0.7" />
-                                    </svg>
-                                    <p>Поддержка</p>
-                                </button>
-                            </li> */}
                         </ul>
                     </nav>
                 </div>

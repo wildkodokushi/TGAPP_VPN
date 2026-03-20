@@ -32,7 +32,7 @@ export function PlanCard({ plan, onBuy }: PlanCardProps) {
         <li className="subscription__tariffs-item">
             <div className="subscription__tariffs-header">
                 <span className="h2">{plan.title}</span>
-                <span className="h2">от {plan.price}</span>
+                <span className="h2">от {plan.price}<span>₽</span></span>
             </div>
             <div className="subscription__tariffs-features">
                 <span><GlobeIcon /> 1 GB/S</span>
@@ -48,7 +48,6 @@ export function PlanCard({ plan, onBuy }: PlanCardProps) {
     );
 }
 
-// Список тарифов — сюда приходит variant, он управляет CSS-классом и бейджем
 export default function PlanList({ variant, redirectTo }: PlanListProps) {
     const navigate = useNavigate();
     const badge = PLAN_BADGE[variant];
