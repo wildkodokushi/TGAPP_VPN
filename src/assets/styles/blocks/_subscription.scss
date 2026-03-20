@@ -94,25 +94,6 @@
             flex-direction: column;
             gap: rem(15);
             background: var(--background-block);
-
-            &:nth-child(2) {
-                position: relative;
-                border-color: var(--background-color-main);
-
-                &::after {
-                    content: 'Лучший выбор';
-                    position: absolute;
-                    display: inline-flex;
-                    align-items: center;
-                    border-radius: var(--border-radius-14);
-                    padding-inline: rem(20);
-                    left: 30%;
-                    top: -10px;
-                    font-weight: 700;
-                    background-color: var(--background-color-main);
-                    box-shadow: 0 2px 4px 1px rgba(137, 44, 151, 0.25);
-                }
-            }
         }
 
         &-header {

@@ -5,6 +5,7 @@ import SubscriptionPage from './pages/Subscription';
 import ReferralsPage from './pages/Referrals';
 import SupportPage from './pages/Support';
 import ProfilePage from './pages/Profile';
+import CheckoutPage from './pages/Checkout';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/referrals" element={<ReferralsPage />} />
           <Route path="/support" element={<SupportPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

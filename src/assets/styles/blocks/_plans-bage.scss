@@ -1,0 +1,45 @@
+@use '../helpers/' as *;
+
+@mixin badge-styles {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--border-radius-14);
+    padding-inline: rem(20);
+    top: -10px;
+    font-weight: 700;
+    background-color: var(--background-color-main);
+    box-shadow: 0 2px 4px 1px rgba(137, 44, 151, 0.25);
+}
+
+.subscription__tariffs-list {
+
+    &--subscription {
+        
+        li:nth-child(2) {
+            position: relative;
+            border-color: var(--background-color-main);
+
+            &::after {
+                content: var(--badge-label);
+                left: 30%;
+                @include badge-styles;
+            }
+        }
+    }
+
+    &--gift {
+
+        li:nth-child(3) {
+            position: relative;
+            border-color: var(--background-color-main);
+
+            &::after {
+                content: var(--badge-label);
+                left: 25%;
+                @include badge-styles;
+            }
+        }
+    }
+}
+
