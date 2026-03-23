@@ -1,0 +1,114 @@
+@use '../helpers/' as *;
+
+.devices {
+    
+    &__inner {
+        padding-block: rem(24);
+        display: flex;
+        flex-direction: column;
+        gap: rem(16);
+    }
+
+    &__title {
+        margin-bottom: rem(0);
+    }
+
+    &__counter {
+        font-size: rem(13);
+        opacity: 0.45;
+        font-weight: 500;
+        margin-top: rem(-8);
+    }
+
+    &__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: rem(10);
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: rem(12);
+        padding: rem(14) rem(16);
+        background: var(--background-block);
+        border: var(--border-block);
+        border-radius: var(--border-radius-14);
+    }
+
+    &__item-info {
+        display: flex;
+        flex-direction: column;
+        gap: rem(2);
+        min-width: 0;
+    }
+
+    &__item-name {
+        font-size: rem(15);
+        font-weight: 600;
+    }
+
+    &__item-url {
+        font-size: rem(12);
+        opacity: 0.4;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: rem(200);
+    }
+
+    &__item-actions {
+        display: flex;
+        align-items: center;
+        gap: rem(8);
+        flex-shrink: 0;
+    }
+
+    &__action-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: rem(38);
+        height: rem(38);
+        border-radius: rem(10);
+        border: none;
+        background: rgba(255, 255, 255, 0.07);
+        color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+        transition: background var(--transition-duration) ease, color var(--transition-duration) ease;
+
+        &--copied {
+            background: rgba(137, 44, 151, 0.2);
+            color: var(--background-color-main);
+        }
+
+        &--delete {
+            background: rgba(220, 50, 50, 0.1);
+            color: rgba(220, 80, 80, 0.7);
+        }
+    }
+
+    &__add-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: rem(8);
+        width: 100%;
+        margin-top: rem(4);
+        animation: fadeInUp 0.25s ease;
+    }
+
+    &__add-price {
+        opacity: 0.75;
+        font-weight: 400;
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(rem(6)); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+}

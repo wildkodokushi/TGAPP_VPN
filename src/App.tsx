@@ -7,7 +7,7 @@ import SupportPage from './pages/Support';
 import ProfilePage from './pages/Profile';
 import CheckoutPage from './pages/Checkout';
 import InfoPage from './pages/Info';
-
+import DevicesPage from './pages/Devices';
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/info" element={<InfoPage />} />
+          <Route path="/devices" element={<DevicesPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

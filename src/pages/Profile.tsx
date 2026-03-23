@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-// Кастомный селект (как на странице поддержки)
 const CustomSelect = ({
     options,
     value,
@@ -157,9 +157,11 @@ export default function CabinetPage() {
                 <div className="profile__referral referrals__link">
                     <div className="referrals__link-notification">
                         <h2 className="referrals__link-title h2">Реферальная программа</h2>
-                        <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 6.83333H14.3333M14.3333 6.83333L8.5 1M14.3333 6.83333L8.5 12.6667" stroke="#694363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
+                        <Link to="/referrals">
+                            <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 6.83333H14.3333M14.3333 6.83333L8.5 1M14.3333 6.83333L8.5 12.6667" stroke="#694363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </Link>
                     </div>
                     <div className='referrals__link-inner'>
                         <span className='profile__referral-link referrals__link-link' ref={linkRef}>
