@@ -60,6 +60,10 @@
             align-items: center;
             justify-content: space-between;
             position: relative;
+
+            & svg {
+                cursor: pointer;
+            }
         }
 
         &-inner {
