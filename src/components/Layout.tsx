@@ -8,6 +8,7 @@ const PATH_TO_TAB: Record<string, string> = {
     '/checkout': '/subscription',
     '/referrals': '/referrals',
     '/support': '/support',
+    '/info': '/info',
     '/profile': '/profile',
     '/gift': '/subscription',
 };
@@ -30,15 +31,14 @@ export default function Layout() {
     const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
     const [overlayOpen, setOverlayOpen] = useState(false);
  
-    // Определяем активный таб с учётом дочерних путей
     const activeTab = PATH_TO_TAB[location.pathname] ?? '/';
  
     const updateIndicator = () => {
         const refMap = {
-            '/':             homeRef,
+            '/': homeRef,
             '/subscription': subscriptionRef,
-            '/referrals':    referralsRef,
-            '/profile':      profileRef,
+            '/referrals': referralsRef,
+            '/profile': profileRef,
         };
  
         const activeRef = refMap[activeTab as keyof typeof refMap];
@@ -72,7 +72,7 @@ export default function Layout() {
         <div className="wrapper">
 
             {/* header */}
-            <div className="header">
+            <header className="header">
                 <div className="header__row container">
                     <div className="header__logo">
                         <div className="logo">
@@ -87,7 +87,7 @@ export default function Layout() {
                         Канал
                     </a>
                 </div>
-            </div>
+            </header>
 
             {/* main */}
             <main className="main-container">
@@ -99,7 +99,7 @@ export default function Layout() {
             )}
             
             {/* footer */}
-            <div className="footer container">
+            <footer className="footer container">
                 <div className={`footer-overlay${overlayOpen ? ' footer-overlay--open' : ''}`}>
                     <ul className="footer-overlay__list">
                         {OVERLAY_LINKS.map((link) => (
@@ -162,7 +162,7 @@ export default function Layout() {
                         </ul>
                     </nav>
                 </div>
-            </div>
+            </footer>
 
         </div>
 

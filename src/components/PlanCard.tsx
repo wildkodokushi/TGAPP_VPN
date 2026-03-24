@@ -25,9 +25,10 @@ const InfinityIcon = () => (
 type PlanCardProps = {
     plan: Plan;
     onBuy: (planId: string) => void;
+    buttonLabel?: string;
 };
 
-export function PlanCard({ plan, onBuy }: PlanCardProps) {
+export function PlanCard({ plan, onBuy, buttonLabel = 'Купить' }: PlanCardProps) {
     return (
         <li className="subscription__tariffs-item">
             <div className="subscription__tariffs-header">
@@ -38,7 +39,7 @@ export function PlanCard({ plan, onBuy }: PlanCardProps) {
                 <span><GlobeIcon /> 1 GB/S</span>
                 <span><InfinityIcon /> GB</span>
                 <button className="subscription__tariffs-button button" onClick={() => onBuy(plan.id)} >
-                    Купить
+                    {buttonLabel}
                 </button>
             </div>
         </li>
@@ -58,7 +59,7 @@ export default function PlanList({ variant, redirectTo, isGift = false }: PlanLi
     return (
         <ul className={`subscription__tariffs-list subscription__tariffs-list--${variant}`} style={{ '--badge-label': `"${badge.label}"` } as React.CSSProperties}>
             {PLANS.map((plan) => (
-                <PlanCard key={plan.id} plan={plan} onBuy={handleBuy} />
+                <PlanCard key={plan.id} plan={plan} onBuy={handleBuy} buttonLabel={isGift ? 'Подарить' : 'Купить'} />
             ))}
         </ul>
     );
