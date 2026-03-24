@@ -8,6 +8,7 @@ import ProfilePage from './pages/Profile';
 import CheckoutPage from './pages/Checkout';
 import InfoPage from './pages/Info';
 import DevicesPage from './pages/Devices';
+import GiftSubscriptionPage from './pages/GiftSubscription';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/info" element={<InfoPage />} />
           <Route path="/devices" element={<DevicesPage />} />
+          <Route path="/gift" element={<GiftSubscriptionPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

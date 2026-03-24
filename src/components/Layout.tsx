@@ -3,18 +3,19 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/icon/logo.svg';
 
 const PATH_TO_TAB: Record<string, string> = {
-    '/':             '/',
+    '/': '/',
     '/subscription': '/subscription',
-    '/checkout':     '/subscription',
-    '/referrals':    '/referrals',
-    '/support':      '/support',
-    '/profile':      '/profile',
+    '/checkout': '/subscription',
+    '/referrals': '/referrals',
+    '/support': '/support',
+    '/profile': '/profile',
+    '/gift': '/subscription',
 };
  
 const OVERLAY_LINKS = [
     { label: 'Поддержка', href: '/support' },
     { label: 'Информация', href: '/info' },
-    { label: 'Админ-панель', href: '/admin' },
+    { label: 'Админ-панель', href: '/admin', }
 ];
 
 export default function Layout() {

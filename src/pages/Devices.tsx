@@ -12,7 +12,7 @@ type Device = {
 const INITIAL_DEVICES: Device[] = [
     { id: '1', name: 'Android', url: 'https://sasat-24/7.ru/13371488228' },
     { id: '2', name: 'Windows', url: 'https://sasat-24/7.ru/13371488228' },
-    { id: '3', name: 'Не настроено', url: 'https://sasat-24/7.ru/13371488228' },
+    { id: '3', name: 'MacOC', url: 'https://sasat-24/7.ru/13371488228' },
 ];
 
 const PRICE_PER_DEVICE = 50;

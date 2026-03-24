@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const CustomSelect = ({
     options,
@@ -93,6 +93,7 @@ const loadSettings = () => {
 };
 
 export default function CabinetPage() {
+    const navigate = useNavigate();
     const [showCopyMessage, setShowCopyMessage] = useState(false);
     const linkRef = useRef<HTMLSpanElement>(null);
 
@@ -157,11 +158,9 @@ export default function CabinetPage() {
                 <div className="profile__referral referrals__link">
                     <div className="referrals__link-notification">
                         <h2 className="referrals__link-title h2">Реферальная программа</h2>
-                        <Link to="/referrals">
-                            <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1 6.83333H14.3333M14.3333 6.83333L8.5 1M14.3333 6.83333L8.5 12.6667" stroke="#694363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </Link>
+                        <svg onClick={() => navigate('/referrals')} width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 6.83333H14.3333M14.3333 6.83333L8.5 1M14.3333 6.83333L8.5 12.6667" stroke="#694363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
                     </div>
                     <div className='referrals__link-inner'>
                         <span className='profile__referral-link referrals__link-link' ref={linkRef}>
@@ -186,7 +185,7 @@ export default function CabinetPage() {
                         Вы получаете 50% от кол-ва дней оплаченных рефералом
                     </p>
                 </div>
-                <button className="profile__button button">
+                <button className="profile__button button" onClick={() => navigate('/gift')}>
                     Подарить подписку
                 </button>
                 <div className="profile__settings">
