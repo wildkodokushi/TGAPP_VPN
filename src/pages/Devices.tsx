@@ -1,3 +1,4 @@
+//пофиксить кнопку
 import { useState } from 'react';
 
 const MAX_DEVICES = 3; //по тарифу

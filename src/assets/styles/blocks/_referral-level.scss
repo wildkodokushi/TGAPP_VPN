@@ -1,0 +1,41 @@
+@use '../helpers/' as *;
+
+// _ref-level.scss
+
+.ref {
+    width: 100%;
+    
+    &-level {
+        border: var(--border-block);
+        border-radius: var(--border-radius-20);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: rem(30);
+        padding-block: rem(20);
+        
+        &__label {
+            color: var(--color-white);
+        }
+
+        &__name {
+            font-weight: 700;
+            font-size: rem(32);
+            color: var(--color-black);
+        }
+    
+        &__percent {
+            font-weight: 500;
+            font-size: rem(20);
+            color: var(--color-white);
+        }
+    
+        &__next {
+            font-weight: 500;
+            font-size: rem(16);
+            color: rgba(255, 255, 255, 0.5);
+            padding-bottom: rem(10);
+        }
+    }
+}

@@ -1,0 +1,48 @@
+@use '../helpers/' as *;
+
+.starter { 
+    background: linear-gradient(112deg, #9ca3af, #6b7280, #4b5563);
+    background-size: 200% 200%;
+    animation: shimmer 3s infinite alternate;
+    color: #9ca3af;
+}
+
+.advanced { 
+    background: linear-gradient(112deg, #10b981, #34d399, #059669);
+    background-size: 200% 200%;
+    animation: shimmer 3s infinite alternate;
+    color: #00744d;
+}
+
+.pro {
+    background: linear-gradient(112deg, #3b82f6, #60a5fa, #1e40af);
+    background-size: 200% 200%;
+    animation: shimmer 3s infinite alternate;
+    color: #01317c;
+}
+
+.elite {
+    background: linear-gradient(112deg, #a855f7, #c084fc, #7c3aed);
+    background-size: 200% 200%;
+    animation: shimmer 3s infinite alternate;
+    color: #38016b;
+}
+
+.master {
+    background: linear-gradient(112deg, #f59e0b, #f97316, #facc15);
+    background-size: 200% 200%;
+    animation: shimmer 3s infinite alternate;
+    color: #664203;
+}
+
+.legend {
+    background: linear-gradient(112deg, #ef4444, #f97316, #b91c1c);
+    background-size: 200% 200%;
+    animation: shimmer 3s infinite alternate;
+    color: #bb0404;
+}
+
+@keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}

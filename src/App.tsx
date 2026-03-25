@@ -4,11 +4,12 @@ import MainPage from './pages/Main';
 import SubscriptionPage from './pages/Subscription';
 import ReferralsPage from './pages/Referrals';
 import SupportPage from './pages/Support';
-import ProfilePage from './pages/Profile';
+// import ProfilePage from './pages/Profile';
 import CheckoutPage from './pages/Checkout';
 import InfoPage from './pages/Info';
 import DevicesPage from './pages/Devices';
 import GiftSubscriptionPage from './pages/GiftSubscription';
+import PartnerPage from './pages/Partners';
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
           <Route path="/subscription" element={<SubscriptionPage />} />
           <Route path="/referrals" element={<ReferralsPage />} />
           <Route path="/support" element={<SupportPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          {/* <Route path="/profile" element={<ProfilePage />} /> */}
+          <Route path="/profile" element={<PartnerPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/info" element={<InfoPage />} />
           <Route path="/devices" element={<DevicesPage />} />
