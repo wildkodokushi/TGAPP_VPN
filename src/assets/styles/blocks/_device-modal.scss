@@ -1,0 +1,48 @@
+@use '../helpers/' as *;
+
+// ─── Модальное окно покупки доп. устройств ────────────────────────────────────
+
+.devices {
+
+    &-modal {
+        min-width: rem(450);
+        margin-top: rem(40);
+        position: fixed;
+        @include abs-center;
+        z-index: 200;
+        border-radius: var(--border-radius-20);
+        background-color: var(--background-block);
+        border: var(--border-block);
+        // padding-block: rem(30);
+        // padding-inline: rem(20);
+        padding: rem(20);
+        animation: slideUp 0.25s ease;
+
+        &__backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 199;
+            backdrop-filter: blur(rem(5));
+            -webkit-backdrop-filter: blur(rem(5));
+
+        }
+        
+        &__title {
+            padding-bottom: rem(30);
+        }
+    }
+}
+
+.devices__add-btn {
+    &--disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+}
+
+.devices__max-note {
+    text-align: center;
+    font-size: rem(12);
+    opacity: 0.4;
+    margin-top: rem(-8);
+}
