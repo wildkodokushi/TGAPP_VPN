@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { REFERRAL_LEVELS, getCurrentLevel } from '../data/referralLevels';
 import ReferralLevelCard from '../components/ReferralLevel';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // демо-данные (замени на API)
 const USER = {
@@ -77,6 +77,7 @@ function CopyButton({ text } : { text: string }) {
 }
 
 export default function PartnerPage() {
+    const navigate = useNavigate();
     const [chartTab, setChartTab] = useState<ChartTab>('registrations');
     const [activeBar, setActiveBar] = useState<number | null>(null);
 
@@ -165,7 +166,7 @@ export default function PartnerPage() {
                 <div className="partner-link referrals__link">
                     <div className="partner-link__header referrals__link-notification">
                         <h2 className="partner-link__title h2">Партнёрская ссылка</h2>
-                        <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg onClick={() => navigate('/referrals')} width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M1 6.83333H14.3333M14.3333 6.83333L8.5 1M14.3333 6.83333L8.5 12.6667" stroke="#694363" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
