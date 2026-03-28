@@ -151,7 +151,7 @@ function AddDevicesModal({
                         ))}
                     </ul>
                 </div>
-                <div className="checkout__footer">
+                <div className="checkout__footer devices-modal__footer">
                     <div className="checkout__total">
                         <span>Итого:</span><br />
                         <span className="checkout__total-price">{totalPrice}<span>₽</span></span>
@@ -212,8 +212,6 @@ export default function DevicesPage() {
                 )}
 
             </div>
-
-            
 
         </div>
     );

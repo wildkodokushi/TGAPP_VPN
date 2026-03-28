@@ -1,7 +1,5 @@
 @use '../helpers/' as *;
 
-// ─── Модальное окно покупки доп. устройств ────────────────────────────────────
-
 .devices {
 
     &-modal {
@@ -13,9 +11,7 @@
         border-radius: var(--border-radius-20);
         background-color: var(--background-block);
         border: var(--border-block);
-        // padding-block: rem(30);
-        // padding-inline: rem(20);
-        padding: rem(20);
+        padding: rem(25);
         animation: slideUp 0.25s ease;
 
         &__backdrop {
@@ -28,7 +24,11 @@
         }
         
         &__title {
-            padding-bottom: rem(30);
+            padding-bottom: rem(25);
+        }
+
+        &__footer {
+            padding-top: rem(25);
         }
     }
 }

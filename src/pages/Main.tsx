@@ -12,7 +12,7 @@ async function checkUserStatus(): Promise<UserStatus> {
 
 function BannedOverlay() {
     const handleSupport = () => {
-        window.open('https://t.me/psychowaresupportxbot', '_blank');
+        window.open('tg://resolve?domain=psychowaresupportxbot', '_blank');
     };
  
     return (
@@ -35,7 +35,7 @@ function BannedOverlay() {
 
 function NotSubscribedOverlay() {
     const handleSubscribe = () => {
-        window.open('https://t.me/psychowarevpn', '_blank');
+        window.open('tg://resolve?domain=psychowarevpn', '_blank');
     };
  
     return (
@@ -43,7 +43,7 @@ function NotSubscribedOverlay() {
             <div className="home-overlay__card">
                 <div className="home-overlay__emoji home-overlay__emoji--notSubscribed"></div>
                 <span className="home-overlay__title">
-                    Секунду.. Вы <span className="home-overlay__title--accent">НЕ</span> подписаны?!
+                    Доступ <span className="home-overlay__title--accent">ограничен</span>
                 </span>
                 <p className="home-overlay__desc">
                     Для использования приложения,<br />необходимо подписаться на наш<br /> новостной канал.

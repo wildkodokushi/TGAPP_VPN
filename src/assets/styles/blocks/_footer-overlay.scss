@@ -20,7 +20,6 @@
         opacity: 0;
         transform: translateY(rem(8)) scale(0.97);
         pointer-events: none;
-        padding-block: rem(7);
         transition: opacity var(--transition-duration) ease, transform var(--transition-duration) ease;
 
         &--open {

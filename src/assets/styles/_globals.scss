@@ -59,3 +59,8 @@ h4, .h4 {
     height: 0;
     overflow: clip;
 }
+
+:focus-visible {
+    outline: rem(2) dashed var(--color-white);
+    outline-offset: rem(2);
+}

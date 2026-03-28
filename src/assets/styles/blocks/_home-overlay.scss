@@ -1,10 +1,7 @@
 @use '../helpers/' as *;
 
-// ─── Home overlays (не подписан / забанен) ────────────────────────────────────
-
 .home-overlay {
-    margin-top: rem(25);
-    position: fixed;
+    position: absolute;
     inset: 0;
     z-index: 100;
     display: flex;

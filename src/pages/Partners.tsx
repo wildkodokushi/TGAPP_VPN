@@ -10,12 +10,12 @@ const USER = {
     id:         '12741274',
     registered: '12.12.2025',
     badge:      'MEDIA-PARTNER',
-    levelName:  'Профессионал',
     referrals:  185,
+    levelName:  getCurrentLevel(185).name,
     conversion: 17,
     income:     2430,
     percent:    25,
-    refLink:    'https://t.me/psychowarevpnxbot?start=ref_662911398',
+    refLink:    'tg://resolve?domain=psychowarevpnxbot?start=ref_662911398',
     balance:    2430,
 };
 
@@ -82,7 +82,7 @@ export default function PartnerPage() {
     const [activeBar, setActiveBar] = useState<number | null>(null);
 
     const currentLevel = getCurrentLevel(USER.referrals);
-    const chartData    = CHART_DATA[chartTab];
+    const chartData = CHART_DATA[chartTab];
 
     const handleShare = () => {
         if (navigator.share) {
@@ -110,7 +110,7 @@ export default function PartnerPage() {
                         </div>
                         <div className="partner-profile__badges">
                             <span className="partner-profile__badge partner-profile__badge--partner button">{USER.badge}</span>
-                            <span className="partner-profile__badge partner-profile__badge--level button">{USER.levelName}</span>
+                            <a href='#partner__level' className="partner-profile__badge partner-profile__badge--level button">{USER.levelName}</a>
                         </div>
                     </div>
                 
@@ -199,12 +199,12 @@ export default function PartnerPage() {
                             </button>
                         ))}
                     </div>
-                    <ResponsiveContainer width="100%" height={250} className={'partner-chart__schedule'}>
+                    <ResponsiveContainer  width="100%" height={250} className={'partner-chart__schedule'}>
                         <BarChart data={chartData} barCategoryGap="40%" onMouseLeave={() => setActiveBar(null)} >
                             <XAxis dataKey="date" axisLine={{ strokeWidth: 0.5, strokeDasharray: '8 8' }} tickLine={{ strokeWidth: 1, strokeDasharray: '3 3' }} tick={{ fontSize: 16, fontWeight: 700 }} height={22} />
-                            <YAxis axisLine={{ strokeWidth: 0.5, strokeDasharray: '8 8' }} tickLine={{ strokeWidth: 1, strokeDasharray: '3 3' }} tick={{ fontSize: 16, fontWeight: 700, }} width={26} />
+                            <YAxis axisLine={{ strokeWidth: 0.5, strokeDasharray: '8 8' }} tickLine={{ strokeWidth: 1, strokeDasharray: '3 3' }} tick={{ fontSize: 9, fontWeight: 700, }} width={26} />
                             <Tooltip content={<ChartTooltip />} cursor={false} />
-                            <Bar dataKey="value" fill="#892c97" radius={[10, 10, 0, 0]} onMouseEnter={(_: any, i: number) => setActiveBar(i)} >
+                            <Bar dataKey="value" fill="#892c97" radius={[10, 10, 0, 0]} onMouseEnter={(_: any, i: number) => setActiveBar(i)}>
                                 {chartData.map((_, i) => (
                                     <Cell key={i} fill={activeBar === i ? '#d472c6' : ACCENT} opacity={activeBar === null || activeBar === i ? 1 : 0.45} />
                                 ))}
@@ -214,7 +214,9 @@ export default function PartnerPage() {
                 </div>
 
                 {/* Текущий уровень */}
-                <ReferralLevelCard level={currentLevel} />
+                <div className="partner__level" id='partner__level'>
+                    <ReferralLevelCard level={currentLevel} />
+                </div>
 
                 {/* Все уровни */}
                 {/* <div className="partner-levels">

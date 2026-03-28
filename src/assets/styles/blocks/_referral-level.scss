@@ -1,7 +1,5 @@
 @use '../helpers/' as *;
 
-// _ref-level.scss
-
 .ref {
     width: 100%;
     
@@ -14,6 +12,8 @@
         text-align: center;
         gap: rem(30);
         padding-block: rem(20);
+        color: red;
+        background-color: red;
         
         &__label {
             color: var(--color-white);
@@ -22,7 +22,8 @@
         &__name {
             font-weight: 700;
             font-size: rem(32);
-            color: var(--color-black);
+            color: currentColor;
+            filter: brightness(50%);
         }
     
         &__percent {
@@ -39,3 +40,8 @@
         }
     }
 }
+
+// .ref-level .partner-profile__badge--level {
+//    background-color: currentColor;
+//    color: currentColor;
+// }

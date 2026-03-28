@@ -106,6 +106,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: rem(20);
             font-weight: 700;
             font-size: rem(18);
             color: rgba(255, 255, 255, 0.5);
@@ -114,6 +115,7 @@
                 display: flex;
                 align-items: center;
                 gap: rem(5);
+                white-space: nowrap;
             }
         }
 
@@ -122,7 +124,8 @@
             height: rem(43);
             border-radius: var(--border-radius-10);
             color: var(--color-white);
-            padding-inline: rem(58);
+            width: 100%;
+            justify-content: center;
             transition: var(--transition-duration);
 
             &:hover {

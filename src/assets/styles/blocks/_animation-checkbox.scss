@@ -9,11 +9,6 @@
         align-items: center;
         cursor: pointer;
         user-select: none;
-
-        &:has(.toggle-input:checked) .toggle-label {
-            color: var(--color-white);
-            // font-weight: 700;
-        }
     }
 
     &-input {
@@ -49,6 +44,7 @@
     }
 
     &-label {
+        color: var(--color-white);
         transition: all var(--transition-duration);
     }
 }
